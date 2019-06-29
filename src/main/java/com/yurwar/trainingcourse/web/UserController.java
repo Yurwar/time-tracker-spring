@@ -11,11 +11,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping
-    public List<User> getListOfPetPhotos() {
-        return userService.findAll();
+    public List<User> getListOfUsers() {
+        return userService.findAllUsers();
     }
 }

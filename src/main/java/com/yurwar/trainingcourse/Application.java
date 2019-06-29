@@ -13,13 +13,23 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @RequestMapping("/hello")
-    public String showHelloWorld() {
-        return "hello-world";
+    @RequestMapping("/registration-form")
+    public String showRegForm() {
+        return "registration-form.html";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String showIndex() {
         return "index.html";
+    }
+
+    @RequestMapping("/users")
+    public String showUsers() {
+        return "users-list.html";
+    }
+
+    @RequestMapping("/login")
+    public String showLogin() {
+        return "login.html";
     }
 }

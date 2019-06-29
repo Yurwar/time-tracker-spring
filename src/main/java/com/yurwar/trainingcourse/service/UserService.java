@@ -1,6 +1,8 @@
 package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.model.User;
+import com.yurwar.trainingcourse.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,24 +10,22 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private static List<User> usersList = new ArrayList<>();
-    static {
-        usersList.add(new User(1,
-                "Vasya",
-                "Pupkin",
-                "vasya.pupkin@gmail.com",
-                "123456"));
-        usersList.add(new User(1,
-                "Mykola",
-                "Sidorov",
-                "mykola.sidor@mail.ru",
-                "789456q"));
+    private final UserRepository repository;
+
+    @Autowired
+    public UserService(UserRepository repository) {
+        this.repository = repository;
     }
 
 
+    public List<User> findAllUsers() {
+        List<User> allUsersList = new ArrayList<>();
+        repository.findAll().forEach(allUsersList::add);
+        return allUsersList;
+    }
 
-    public List<User> findAll() {
-        return usersList;
+    public void saveUser(User user) {
+        repository.save(user);
     }
 
 

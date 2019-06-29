@@ -2,40 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My App</title>
+    <title>Spring boot registration form</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
 </head>
-<body ng-app="springBootApp">
-<div class="container" style="margin-top: 30px" ng-controller="appController">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">All registered users</div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Email</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="user in users">
-                            <td>{{user.firstName}}</td>
-                            <td>{{user.lastName}}</td>
-                            <td>{{user.email}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+<body>
+<div class="container" style="margin-top: 30px">
+    <ul class="nav nav-tabs nav-fill bg-light">
+        <li class="nav-item">
+            <a class="nav-link disabled" href="/index">Main page</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/registration-form">Registration form</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/users">All users</a>
+        </li>
+    </ul>
+    <h1 class="h1">Spring Boot registration program</h1>
 </div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
