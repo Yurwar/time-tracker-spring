@@ -18,17 +18,6 @@ regFormApp.controller("regFormController", function ($scope, $http) {
             url: '/register',
             data: $.param(regData),
             headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-        }).then(
-            (data) => {
-                console.log(data);
-                console.log('Registration success');
-                $scope.message = 'Registration success';
-            },
-            (error) => {
-                console.log(error);
-                console.log('Registration failed');
-                $scope.message = 'Registration failed';
-            }
-        )
+        })
     }
 });
