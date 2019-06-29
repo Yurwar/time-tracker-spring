@@ -4,11 +4,13 @@ package com.yurwar.trainingcourse.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Getter
 @Entity
 @Table(name = "registered_users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})

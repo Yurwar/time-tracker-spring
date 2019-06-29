@@ -1,6 +1,6 @@
 let usersListApp= angular.module("usersListApp", []);
 let regFormApp = angular.module("regFormApp", []);
-
+let loginFormApp = angular.module("loginFormApp", []);
 
 usersListApp.controller("usersController", function ($scope, $http) {
     $scope.users = [];
@@ -21,3 +21,16 @@ regFormApp.controller("regFormController", function ($scope, $http) {
         })
     }
 });
+
+loginFormApp.controller("loginFormController", function ($scope, $http) {
+   $scope.loginData = {};
+   $scope.sendForm = function (loginData) {
+       $http({
+           method: 'POST',
+           url: '/login-user',
+           data: $.param(loginData),
+           headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+       })
+   }
+});
+

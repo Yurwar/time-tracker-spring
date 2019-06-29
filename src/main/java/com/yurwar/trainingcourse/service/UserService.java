@@ -1,5 +1,6 @@
 package com.yurwar.trainingcourse.service;
 
+import com.yurwar.trainingcourse.dto.UserDTO;
 import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
@@ -31,6 +32,17 @@ public class UserService {
             repository.save(user);
         } catch (Exception e) {
             log.error(user.getEmail() + " - Login not unique");
+        }
+    }
+
+    public boolean isUserExist(UserDTO userDTO) {
+        User user = repository.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword());
+        if (user != null) {
+            log.info(user + " there is suitable user record in database");
+            return true;
+        } else {
+            log.info(userDTO + " there is no suitable user records in database");
+            return false;
         }
     }
 
