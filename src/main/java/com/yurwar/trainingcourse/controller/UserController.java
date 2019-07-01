@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.web;
+package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.service.UserService;

@@ -1,7 +1,7 @@
-package com.yurwar.trainingcourse.web;
+package com.yurwar.trainingcourse.controller;
+
 
 import com.yurwar.trainingcourse.dto.UserDTO;
-import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +13,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Log4j2
 @Controller
-public class RegistrationController {
+public class LoginController {
     private final UserService userService;
 
     @Autowired
-    public RegistrationController(UserService userService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerNewUser(UserDTO userDTO) {
-        log.info("{}", userDTO);
-        userService.saveUser(new User(
-                userDTO.getFirstName(),
-                userDTO.getLastName(),
-                userDTO.getEmail(),
-                userDTO.getPassword()));
-        return "registration-form";
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/login-user", method = RequestMethod.POST)
+    public void loginUser(UserDTO userDTO) {
+        log.info("User login data: " + userDTO);
+        if(userService.isUserExist(userDTO)) {
+            log.info("User successfully logged in");
+        } else {
+            log.info("User doesn't logged in");
+        }
     }
 }

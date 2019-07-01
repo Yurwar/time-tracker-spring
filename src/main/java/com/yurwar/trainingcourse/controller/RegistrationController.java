@@ -1,5 +1,4 @@
-package com.yurwar.trainingcourse.web;
-
+package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.UserDTO;
 import com.yurwar.trainingcourse.model.User;
@@ -14,22 +13,23 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Log4j2
 @Controller
-public class LoginController {
+public class RegistrationController {
     private final UserService userService;
 
     @Autowired
-    public LoginController(UserService userService) {
+    public RegistrationController(UserService userService) {
         this.userService = userService;
     }
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @RequestMapping(value = "/login-user", method = RequestMethod.POST)
-    public void loginUser(UserDTO userDTO) {
-        log.info("User login data: " + userDTO);
-        if(userService.isUserExist(userDTO)) {
-            log.info("User successfully logged in");
-        } else {
-            log.info("User doesn't logged in");
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String registerNewUser(UserDTO userDTO) {
+        log.info("{}", userDTO);
+        userService.saveUser(new User(
+                userDTO.getFirstName(),
+                userDTO.getLastName(),
+                userDTO.getEmail(),
+                userDTO.getPassword()));
+        return "registration-form";
     }
 }
