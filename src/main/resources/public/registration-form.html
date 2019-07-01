@@ -27,7 +27,7 @@
         <div class="card-body">
             <form ng-submit="sendForm(regData)">
                 <div class="form-group">
-                    <label for="firstName">First name:</label>
+                    <label id="firstNameLabel "for="firstName">First name:</label>
                     <input type="text"
                            name="firstName"
                            id="firstName"
@@ -46,7 +46,7 @@
                            ng-model="regData.lastName"/>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email:</label>
+                    <label id="emailLabel" for="email">Email:</label>
                     <input type="email"
                            name="email"
                            id="email"
@@ -68,7 +68,7 @@
                 <button type="submit" class="btn btn-success">Sign up</button>
             </form>
         </div>
-<!--        <div id="regResMsg" ng-attr-title="{{this[message]}}" class="card-footer">{{message}}</div>-->
+        <div id="regResMsg" ng-attr-title="{{this[message]}}" class="card-footer">{{message}}</div>
     </div>
 </div>
 

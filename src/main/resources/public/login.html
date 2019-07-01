@@ -27,7 +27,7 @@
         <div class="card-body">
             <form ng-submit="sendForm(regData)">
                 <div class="form-group">
-                    <label for="email">Email:</label>
+                    <label id="emailLabel" for="email">Email:</label>
                     <input type="email"
                            name="email"
                            id="email"
@@ -37,7 +37,7 @@
                            ng-model="regData.email"/>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label id="passwordLabel" for="password">Password:</label>
                     <input type="password"
                            name="password"
                            id="password"
@@ -49,6 +49,7 @@
                 <button type="submit" class="btn btn-primary">Log in</button>
             </form>
         </div>
+        <div id="logResMsg" ng-attr-title="{{this[message]}}" class="card-footer">{{message}}</div>
     </div>
 </div>
 
