@@ -31,18 +31,22 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
+                            <th>Id</th>
                             <th>First name</th>
                             <th>Last name</th>
                             <th>Email</th>
                             <th>Password</th>
+                            <th>Roles</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="user in users">
+                            <td>{{user.id}}</td>
                             <td>{{user.firstName}}</td>
                             <td>{{user.lastName}}</td>
                             <td>{{user.email}}</td>
                             <td>{{user.password}}</td>
+                            <td>{{user.roles}}</td>
                         </tr>
                         </tbody>
                     </table>

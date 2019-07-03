@@ -12,42 +12,46 @@ usersListApp.controller("usersController", function ($scope, $http) {
 
 regFormApp.controller("regFormController", function ($scope, $http) {
     $scope.regData = {};
+
     let resultMessageEl = document.getElementById('regResMsg');
     let firstNameEl = document.getElementById('firstName');
+    let lastNameEl = document.getElementById('lastName');
     let emailEl = document.getElementById('email');
-
-    let firstNameLabel = document.getElementById('firstNameLabel');
+    let passwordEl = document.getElementById('password');
     let emailLabel = document.getElementById('emailLabel');
-
-    emailEl.addEventListener('input', () => {
-        firstNameLabel.style.color = 'black';
-        emailLabel.style.color = 'black';
-        $scope.message = '';
-    });
 
     $scope.sendForm = function (regData) {
         $http({
             method: 'POST',
             url: '/register-user',
-            data: $.param(regData),
-            headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+            data: regData,
+            headers: {'Content-Type' : 'application/json'}
         }).then(
             (data) => {
                 resultMessageEl.style.color = 'green';
                 $scope.message = 'Successfully registered';
                 firstNameEl.value = '';
+                lastNameEl.value = '';
+                passwordEl.value = '';
+
                 emailEl.value = '';
                 emailLabel.style.color = 'black';
             },
             (error) => {
                 console.log(error.data);
                 resultMessageEl.style.color = 'red';
-                emailLabel.style.color = 'red';
                 $scope.message = error.data.message;
+
+                emailLabel.style.color = 'red';
             }
         )
 
-    }
+    };
+
+    emailEl.addEventListener('input', (event) => {
+        emailLabel.style.color = 'black';
+        $scope.message = '';
+    });
 });
 
 loginFormApp.controller("loginFormController", function ($scope, $http) {

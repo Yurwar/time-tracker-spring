@@ -26,9 +26,7 @@ public class UserService {
 
 
     public List<User> findAllUsers() {
-        List<User> allUsersList = new ArrayList<>();
-        repository.findAll().forEach(allUsersList::add);
-        return allUsersList;
+        return new ArrayList<>(repository.findAll());
     }
 
     public void saveUser(User user) {
