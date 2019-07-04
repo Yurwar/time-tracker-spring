@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
     @GetMapping("/index")
     public String getIndexPage() {
-        return "index.html";
+        return "index";
     }
 
     @GetMapping("/users")
     public String getUsersPage() {
-        return "users.html";
+        return "users";
     }
 }

@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @GetMapping
     public String getRegistrationPage() {
-        return "registration.html";
+        return "registration";
     }
 
     @ResponseStatus(HttpStatus.CREATED)

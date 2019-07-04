@@ -30,7 +30,7 @@ public class LoginController {
         if (request.getParameterMap().containsKey("error")) {
             modelMap.addAttribute("error", true);
         }
-        return "login.html";
+        return "login";
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
