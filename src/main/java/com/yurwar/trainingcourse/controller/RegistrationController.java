@@ -1,10 +1,7 @@
 package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.dto.UserDTO;
 import com.yurwar.trainingcourse.exception.LoginNotUniqueException;
-import com.yurwar.trainingcourse.model.Role;
-import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.Map;
 
 @Log4j2
@@ -28,7 +24,7 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String showRegForm() {
+    public String getRegistrationPage() {
         return "registration.html";
     }
 

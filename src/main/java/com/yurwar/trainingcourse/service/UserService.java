@@ -38,7 +38,7 @@ public class UserService {
                     .lastName(userDTO.getLastName())
                     .email(userDTO.getEmail())
                     .password(userDTO.getPassword())
-
+                    .active(true)
                     //Tmp usage of only one role
                     .roles(Collections.singleton(Role.USER))
                     .build();

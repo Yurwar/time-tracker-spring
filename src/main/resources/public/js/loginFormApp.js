@@ -37,12 +37,13 @@ loginFormApp.controller("loginFormController", function ($scope, $http) {
                 passwordEl.value = '';
             },
             (error) => {
+                $scope.message = error.data.message;
                 resultMessageEl.style.color = 'red';
+
                 emailLabel.style.color = 'red';
                 passwordLabel.style.color = 'red';
 
                 passwordEl.value = '';
-                $scope.message = error.data.message;
             }
         );
     }

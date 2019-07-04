@@ -18,8 +18,8 @@ regFormApp.controller("regFormController", function ($scope, $http) {
             headers: {'Content-Type' : 'application/json'}
         }).then(
             (data) => {
-                resultMessageEl.style.color = 'green';
                 $scope.message = 'Successfully registered';
+                resultMessageEl.style.color = 'green';
                 firstNameEl.value = '';
                 lastNameEl.value = '';
                 passwordEl.value = '';
@@ -38,7 +38,7 @@ regFormApp.controller("regFormController", function ($scope, $http) {
 
     };
 
-    emailEl.addEventListener('input', (event) => {
+    emailEl.addEventListener('input', () => {
         emailLabel.style.color = 'black';
         $scope.message = '';
     });
