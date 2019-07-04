@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -39,9 +40,9 @@ public class RegistrationController {
     }
 
     @ExceptionHandler(LoginNotUniqueException.class)
-    public ResponseEntity<String> handleRuntimeException(LoginNotUniqueException e) {
+    public ResponseEntity<LoginNotUniqueException> handleRuntimeException(LoginNotUniqueException e, Map<String, Object> model) {
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("{\"message\": \"" + e.getMessage() + "\"}");
+                .badRequest()
+                .body(e);
     }
 }

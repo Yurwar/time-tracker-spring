@@ -39,7 +39,7 @@
 //                .dataSource(dataSource)
 //                .passwordEncoder(NoOpPasswordEncoder.getInstance())
 //                .usersByUsernameQuery("select email, password from registered_users where email=?")
-//                .authoritiesByUsernameQuery("select u.email, ur.roles, from registered_users u inner join user_role ur on u.id = ur.user_id where u.email = ?");
+//                .authoritiesByUsernameQuery("select u.email, ur.roles from registered_users u inner join user_role ur on u.id = ur.user_id where u.email = ?");
 //
 //    }
 //

@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -34,15 +32,18 @@ public class UserService {
 
     public void saveUser(RegistrationUserDTO userDTO) {
         try {
-            repository.save(User
+            User user = User
                     .builder()
                     .firstName(userDTO.getFirstName())
                     .lastName(userDTO.getLastName())
                     .email(userDTO.getEmail())
                     .password(userDTO.getPassword())
+
+                    //Tmp usage of only one role
                     .roles(Collections.singleton(Role.USER))
-                    .build()
-            );
+                    .build();
+            repository.save(user);
+            log.info("New user " + user);
         } catch (DataIntegrityViolationException e) {
             log.error(userDTO.getEmail() + " - Login not unique");
             throw new LoginNotUniqueException(userDTO.getEmail() + " - Login not unique", e);

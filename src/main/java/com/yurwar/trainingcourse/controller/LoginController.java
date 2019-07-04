@@ -34,10 +34,10 @@ public class LoginController {
     }
 
     @ExceptionHandler(LoginException.class)
-    public ResponseEntity<String> handleLoginException(LoginException e) {
+    public ResponseEntity<Exception> handleLoginException(LoginException e) {
         log.warn(e.getMessage());
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("{\"message\": \"" + e.getMessage() + "\"}");
+                .badRequest()
+                .body(e);
     }
 }
