@@ -36,7 +36,7 @@ public class RegistrationController {
     }
 
     @ExceptionHandler(LoginNotUniqueException.class)
-    public ResponseEntity<LoginNotUniqueException> handleRuntimeException(LoginNotUniqueException e, Map<String, Object> model) {
+    public ResponseEntity<LoginNotUniqueException> handleRuntimeException(LoginNotUniqueException e) {
         return ResponseEntity
                 .badRequest()
                 .body(e);

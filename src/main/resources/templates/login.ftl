@@ -25,19 +25,19 @@
     </style>
 </head>
 <body class="text-center" ng-app="loginFormApp" ng-controller="loginFormController">
-<form class="form-signin" novalidate ng-submit="sendForm(regData)">
+<form class="form-signin" method="post" action="/login">
     <a href="/index"><img class="mb-4" src="<@spring.url '/images/stopwatch.svg'/>" width="100" height="100"></a>
     <h1 class="h3 mb-3 font-weight-normal">Sign in to Time-Tracker</h1>
-<#--    <#if logout>-->
+    <#if logout>
         <div class="alert alert-success" role="alert">You have been logged out successfully</div>
-<#--    </#if>-->
-<#--    <#if error>-->
+    </#if>
+    <#if error>
         <div class="alert alert-danger" role="alert">Incorrect email or password</div>
-<#--    </#if>-->
+    </#if>
     <label id="emailLabel" for="email" class="sr-only">Email address</label>
     <input type="email"
            id="email"
-           name="email"
+           name="username"
            class="form-control"
            placeholder="Email address"
            required
@@ -51,11 +51,11 @@
            required
            class="form-control"
            ng-model="regData.password">
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-    </div>
+<#--    <div class="checkbox mb-3">-->
+<#--        <label>-->
+<#--            <input type="checkbox" value="remember-me"> Remember me-->
+<#--        </label>-->
+<#--    </div>-->
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
 

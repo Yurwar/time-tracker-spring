@@ -75,12 +75,12 @@
                 <button type="submit" class="btn btn-success">Sign up</button>
             </form>
         </div>
-        <div id="regResMsg" ng-attr-title="{{this[message]}}" class="card-footer">{{message}}</div>
+        <div id="regResMsg"" class="card-footer">{{message}}</div>
     </div>
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-<script type="text/javascript" src="../public/js/regFormApp.js"></script>
+<script type="text/javascript" src="<@spring.url '/js/regFormApp.js'/>"></script>
 </body>
 </html>
