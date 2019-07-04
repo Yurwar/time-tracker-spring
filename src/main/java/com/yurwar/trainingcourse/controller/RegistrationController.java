@@ -1,5 +1,6 @@
 package com.yurwar.trainingcourse.controller;
 
+import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
 import com.yurwar.trainingcourse.dto.UserDTO;
 import com.yurwar.trainingcourse.exception.LoginNotUniqueException;
 import com.yurwar.trainingcourse.model.Role;
@@ -16,7 +17,7 @@ import java.util.Collections;
 
 @Log4j2
 @Controller
-@RequestMapping(value = "/register-user")
+@RequestMapping("/registration")
 public class RegistrationController {
     private final UserService userService;
 
@@ -25,20 +26,20 @@ public class RegistrationController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public String showRegForm() {
+        return "registration.html";
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(method = RequestMethod.POST)
-    public void registerNewUser(@RequestBody UserDTO userDTO) {
-        log.info("{}", userDTO);
-        userService.saveUser(new User(userDTO.getFirstName(),
-                        userDTO.getLastName(),
-                        userDTO.getEmail(),
-                        userDTO.getPassword(),
-                        Collections.singleton(Role.USER)));
+    @PostMapping
+    public void registerNewUser(@RequestBody RegistrationUserDTO registrationUserDTO) {
+        log.info("{}", registrationUserDTO);
+        userService.saveUser(registrationUserDTO);
     }
 
     @ExceptionHandler(LoginNotUniqueException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
-        log.warn(e.getMessage());
+    public ResponseEntity<String> handleRuntimeException(LoginNotUniqueException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body("{\"message\": \"" + e.getMessage() + "\"}");

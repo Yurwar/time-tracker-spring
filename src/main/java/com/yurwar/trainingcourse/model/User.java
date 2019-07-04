@@ -1,10 +1,7 @@
 package com.yurwar.trainingcourse.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Getter
+@Builder
 @Entity
 @Table(name = "registered_users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
