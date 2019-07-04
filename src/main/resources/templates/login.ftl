@@ -37,7 +37,7 @@
     <label id="emailLabel" for="email" class="sr-only">Email address</label>
     <input type="email"
            id="email"
-           name="username"
+           name="email"
            class="form-control"
            placeholder="Email address"
            required
@@ -51,12 +51,12 @@
            required
            class="form-control"
            ng-model="regData.password">
-<#--    <div class="checkbox mb-3">-->
-<#--        <label>-->
-<#--            <input type="checkbox" value="remember-me"> Remember me-->
-<#--        </label>-->
-<#--    </div>-->
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <div class="card" style="margin-top: 20px">
+        <div class="card-body">
+            <p class="card-text">New to Time-Tracker? <a class="memberNameLink" href="/registration">Create an account</a></p>
+        </div>
+    </div>
 </form>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>

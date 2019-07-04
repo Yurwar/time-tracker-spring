@@ -40,14 +40,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/js/**", "/css/**", "/index", "/registration")
                     .permitAll()
-                    .antMatchers("/users")
-                    .authenticated()
+                    .antMatchers("/users/**")
+                    .hasAuthority("ADMIN")
                 .and()
                     .formLogin()
                     .loginPage("/login")
+                    .failureUrl("/login?error")
+                    .usernameParameter("email")
                     .permitAll()
                 .and()
                     .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll();
     }
 }

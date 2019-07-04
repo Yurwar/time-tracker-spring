@@ -32,11 +32,11 @@ public class LoginController {
         return "login";
     }
 
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    @PostMapping
-//    public void loginUser(LoginUserDTO loginUserDTO) {
-//        userService.loginUser(loginUserDTO);
-//    }
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping
+    public void loginUser(LoginUserDTO loginUserDTO) {
+        userService.loginUser(loginUserDTO);
+    }
 
     @ExceptionHandler(LoginException.class)
     public ResponseEntity<Exception> handleLoginException(LoginException e) {
