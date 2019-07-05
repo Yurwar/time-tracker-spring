@@ -6,7 +6,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -16,10 +18,12 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final DataSource dataSource;
+    private final AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
-    public WebSecurityConfig(DataSource dataSource) {
+    public WebSecurityConfig(DataSource dataSource, AccessDeniedHandler accessDeniedHandler) {
         this.dataSource = dataSource;
+        this.accessDeniedHandler = accessDeniedHandler;
     }
 
 
@@ -27,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
+                .passwordEncoder(new BCryptPasswordEncoder())
                 .usersByUsernameQuery("select email, password, active from registered_users where email=?")
                 .authoritiesByUsernameQuery("select u.email, ur.roles from registered_users u inner join user_role ur on u.id = ur.user_id where u.email = ?");
     }
@@ -38,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/js/**", "/css/**", "/index", "/registration")
+                    .antMatchers("/js/**", "/css/**", "/index", "/registration", "/access-denied")
                     .permitAll()
                     .antMatchers("/users/**")
                     .hasAuthority("ADMIN")
@@ -52,6 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
-                    .permitAll();
+                    .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler);
     }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            padding-top: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+<main role="main">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">Access denied</h1>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

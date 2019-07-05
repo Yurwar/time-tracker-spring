@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Builder
 @Entity
-@SequenceGenerator(name = "registeredUsersSeq", sequenceName = "registerd_users_id_seq")
+@SequenceGenerator(name = "registeredUsersSeq", sequenceName = "registered_users_id_seq")
 @Table(name = "registered_users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
     @Id
