@@ -32,24 +32,24 @@
 <main role="main">
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-4">Time-Tracker!</h1>
-            <p>This is a time tracking program that allows you to track your activities</p>
+            <h1 class="display-4" th:text="#{index.main.name}"></h1>
+            <p th:text="#{index.main.desc}"></p>
         </div>
     </div>
 
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h3>Track activities</h3>
-                <p></p>
+                <h3 th:text="#{index.secondary.column1.name}"></h3>
+                <p th:text="#{index.secondary.column1.desc}"></p>
             </div>
             <div class="col-md-4">
-                <h3>Mark the amount of spent time</h3>
-                <p></p>
+                <h3 th:text="#{index.secondary.column2.name}"></h3>
+                <p th:text="#{index.secondary.column2.desc}"></p>
             </div>
             <div class="col-md-4">
-                <h3>Make requests on adding or removing activites</h3>
-                <p></p>
+                <h3 th:text="#{index.secondary.column3.name}"></h3>
+                <p th:text="#{index.secondary.column3.desc}"></p>
             </div>
         </div>
         <hr>

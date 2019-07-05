@@ -12,18 +12,17 @@ import java.util.Set;
 @Getter
 @Builder
 @Entity
-@SequenceGenerator(name = "registeredUsersSeq", sequenceName = "registered_users_id_seq")
 @Table(name = "registered_users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registeredUsersSeq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private int id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "email", nullable = false, unique = true)

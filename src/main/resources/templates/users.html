@@ -13,19 +13,19 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">All registered users</div>
+            <div class="card" style="margin-top: 60px">
+                <div class="card-header" th:text="#{users.header}">All registered users</div>
                 <div class="card-body">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Email</th>
-                            <th>Password</th>
-                            <th>Active</th>
-                            <th>Roles</th>
+                            <th th:text="#{users.id}">Id</th>
+                            <th th:text="#{users.first_name}">First name</th>
+                            <th th:text="#{users.last_name}">Last name</th>
+                            <th th:text="#{users.email}">Email</th>
+                            <th th:text="#{users.password}">Password</th>
+                            <th th:text="#{users.active}">Active</th>
+                            <th th:text="#{users.roles}">Roles</th>
                         </tr>
                         </thead>
                         <tbody>

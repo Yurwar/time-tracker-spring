@@ -15,23 +15,23 @@
     <div class="collapse navbar-collapse" id="navbars">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/index" th:text="#{link.home}"></a>
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item active">
-                <a class="nav-link" href="/users">All users</a>
+                <a class="nav-link" href="/users" th:text="#{link.all_users}"></a>
             </li>
         </ul>
         <div class="form-inline my-2 my-lg-0" sec:authorize="!isAuthenticated()">
             <form action="/registration" method="get">
-                <button type="submit" class="btn btn-outline-primary mr-3 my-2 my-sm-0">Sign up</button>
+                <button type="submit" class="btn btn-outline-primary mr-3 my-2 my-sm-0" th:text="#{button.signup}">Sign up</button>
             </form>
             <form action="/login" method="get">
-                <button type="submit" class="btn btn-success my-2 my-sm-0">Log in</button>
+                <button type="submit" class="btn btn-primary my-2 my-sm-0" th:text="#{button.signin}"></button>
             </form>
         </div>
         <div sec:authorize="isAuthenticated()">
             <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
-                <button type="submit" class="btn btn-success my-2 my-sm-0">Log out</button>
+                <button type="submit" class="btn btn-primary my-2 my-sm-0" th:text="#{button.signout}">Log out</button>
             </form>
         </div>
     </div>

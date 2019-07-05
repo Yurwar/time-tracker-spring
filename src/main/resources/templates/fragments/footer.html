@@ -10,14 +10,15 @@
 <footer th:fragment="footer" class="container">
     <p>
         <span sec:authorize="isAuthenticated()">
-            Logged user: <span class="mr-3" sec:authentication="name"></span>
-            Roles: <span class="mr-3" sec:authentication="principal.authorities"></span>
+            <span th:text="#{footer.logged_user}">Logged user: </span><span class="mr-4" sec:authentication="name"></span>
+            <span th:text="#{footer.roles}">Roles: </span><span class="mr-4" sec:authentication="principal.authorities"></span>
         </span>
     </p>
-    <select class="form-control form-control-sm col-md-1" data-width="fit">
-        <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
-        <option  data-content='<span class="flag-icon flag-icon-ua"></span> Ukrainian'>Ukrainian</option>
-    </select>
+    <span style="float: right">
+    <a href="?lang=en" th:text="#{lang.en}">en</a>
+    |
+    <a href="?lang=ua" th:text="#{lang.ua}">ua</a>
+</span>
 </footer>
 </body>
 </html>
