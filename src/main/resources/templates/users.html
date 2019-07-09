@@ -7,40 +7,38 @@
     <title>All users</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body ng-app="usersListApp">
-<div class="container-fluid" ng-controller="usersController">
+<body ng-app="usersListApp" ng-controller="usersController">
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card" style="margin-top: 60px">
-                <div class="card-header" th:text="#{users.header}">All registered users</div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th th:text="#{users.id}">Id</th>
-                            <th th:text="#{users.first_name}">First name</th>
-                            <th th:text="#{users.last_name}">Last name</th>
-                            <th th:text="#{users.email}">Email</th>
-                            <th th:text="#{users.password}">Password</th>
-                            <th th:text="#{users.active}">Active</th>
-                            <th th:text="#{users.roles}">Roles</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="user in users">
-                            <td>{{user.id}}</td>
-                            <td>{{user.firstName}}</td>
-                            <td>{{user.lastName}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.password}}</td>
-                            <td>{{user.active}}</td>
-                            <td>{{user.roles}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" style="margin-top: 60px">
+            <div class="card-header" th:text="#{users.header}">All registered users</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th th:text="#{users.id}">Id</th>
+                        <th th:text="#{users.first_name}">First name</th>
+                        <th th:text="#{users.last_name}">Last name</th>
+                        <th th:text="#{users.email}">Email</th>
+                        <th th:text="#{users.password}">Password</th>
+                        <th th:text="#{users.active}">Active</th>
+                        <th th:text="#{users.roles}">Roles</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="user in users">
+                        <td>{{user.id}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastName}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.password}}</td>
+                        <td>{{user.active}}</td>
+                        <td>{{user.roles}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

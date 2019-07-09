@@ -5,6 +5,7 @@ import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
 import com.yurwar.trainingcourse.exception.IncorrectPasswordException;
 import com.yurwar.trainingcourse.exception.LoginNotUniqueException;
 import com.yurwar.trainingcourse.exception.NoSuchUserException;
+import com.yurwar.trainingcourse.model.Activity;
 import com.yurwar.trainingcourse.model.Role;
 import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -29,7 +31,7 @@ public class UserService {
 
 
     public List<User> findAllUsers() {
-        return new ArrayList<>(repository.findAll());
+        return repository.findAll();
     }
 
     public void saveUser(RegistrationUserDTO userDTO) {
@@ -67,6 +69,17 @@ public class UserService {
 
         log.info(userDTO + " user successfully logged in");
         return user;
+    }
+
+    @Transactional
+    public void addActivity(Long userId, Activity activity) {
+        User user = repository.getOne(userId);
+        user.getActivities().add(activity);
+        repository.save(user);
+    }
+
+    public void addActivity(Activity... activities) {
+
     }
 
 

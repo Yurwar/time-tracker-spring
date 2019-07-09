@@ -11,13 +11,15 @@ import java.util.Set;
 @ToString
 @Getter
 @Builder
+@EqualsAndHashCode
 @Entity
-@Table(name = "registered_users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+@SequenceGenerator(name = "userSeq", sequenceName = "registerd_users_id_seq")
+@Table(name = "registered_users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeq")
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -38,6 +40,9 @@ public class User {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Set<Activity> activities;
 
     public User(String firstName, String lastName, String email, String password, boolean active, Set<Role> roles) {
         this.firstName = firstName;
