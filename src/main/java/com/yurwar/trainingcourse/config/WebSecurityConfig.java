@@ -1,5 +1,6 @@
 package com.yurwar.trainingcourse.config;
 
+import com.yurwar.trainingcourse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,28 +11,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final DataSource dataSource;
+    private final UserService userService;
     private final AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
-    public WebSecurityConfig(DataSource dataSource, AccessDeniedHandler accessDeniedHandler) {
-        this.dataSource = dataSource;
+    public WebSecurityConfig(UserService userService, AccessDeniedHandler accessDeniedHandler) {
+        this.userService = userService;
         this.accessDeniedHandler = accessDeniedHandler;
     }
 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery("select email, password, active from registered_users where email=?")
-                .authoritiesByUsernameQuery("select u.email, ur.roles from registered_users u inner join user_role ur on u.id = ur.user_id where u.email = ?");
+        auth
+                .userDetailsService(userService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override

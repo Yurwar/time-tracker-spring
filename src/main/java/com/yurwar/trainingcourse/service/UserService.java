@@ -12,6 +12,9 @@ import com.yurwar.trainingcourse.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +23,7 @@ import java.util.*;
 
 @Log4j2
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository repository;
 
     @Autowired
@@ -83,4 +86,14 @@ public class UserService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = repository.findByEmail(s);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("No such user exception");
+        }
+
+        return user;
+    }
 }
