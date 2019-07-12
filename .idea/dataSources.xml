@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="reg_form_db@localhost" uuid="e3babf38-c19f-4d30-be8e-66265f6b5078">
+    <data-source source="LOCAL" name="time_tracker_db@localhost" uuid="c1ca562e-284d-40ff-b579-7babc2bff73c">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/reg_form_db</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db</jdbc-url>
     </data-source>
   </component>
 </project>

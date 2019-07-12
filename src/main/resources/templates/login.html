@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/signin.css}" >
 </head>
-<body class="text-center" ng-app="loginFormApp" ng-controller="loginFormController">
+<body class="text-center">
 <form class="form-signin" th:action="@{/login}"  method="post">
     <a href="/index"><img class="mb-4" th:src="@{/images/stopwatch.svg}" width="100" height="100"></a>
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.header}">Sign in to Time-Tracker</h1>
@@ -15,26 +15,25 @@
             You have been logged out successfully
         </div>
         <div th:if="${error}" class="alert alert-danger" role="alert" th:text="#{login.error}">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             Incorrect email or password
         </div>
-    <label id="emailLabel" for="email" class="sr-only" th:text="#{login.label.email}">Email address</label>
-    <input type="email"
-           id="email"
-           name="email"
+    <label id="usernameLabel" for="username" class="sr-only" th:text="#{login.label.username}"></label>
+    <input type="text"
+           id="username"
+           name="username"
            class="form-control"
-           th:placeholder="#{login.input.email.placeholder}"
+           th:placeholder="#{login.input.username.placeholder}"
            required
            autofocus
-           ng-model="regData.email">
-    <label id="passwordLabel" for="password" class="sr-only" th:text="#{login.label.password}">Password</label>
+    >
+    <label id="passwordLabel" for="password" class="sr-only" th:text="#{login.label.password}"></label>
     <input type="password"
            name="password"
            id="password"
            th:placeholder="#{login.input.password.placeholder}"
            required
            class="form-control"
-           ng-model="regData.password">
+    >
     <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{button.signin}"></button>
     <div class="card" style="margin-top: 20px">
         <div class="card-body">

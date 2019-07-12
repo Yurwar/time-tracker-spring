@@ -15,13 +15,16 @@
         <div class="card">
             <div class="card-header" th:text="#{users.header}">All registered users</div>
             <div class="card-body">
-                <table class="table table-striped">
+                <div th:if="${users.isEmpty()}">
+                    <p th:text="#{users.empty}"></p>
+                </div>
+                <table th:unless="${users.isEmpty()}"  class="table table-striped">
                     <thead>
                     <tr>
                         <th th:text="#{users.id}">Id</th>
                         <th th:text="#{users.first_name}">First name</th>
                         <th th:text="#{users.last_name}">Last name</th>
-                        <th th:text="#{users.email}">Email</th>
+                        <th th:text="#{users.username}">Email</th>
                         <th th:text="#{users.password}">Password</th>
                         <th th:text="#{users.active}">Active</th>
                         <th th:text="#{users.roles}">Roles</th>
@@ -32,10 +35,10 @@
                         <td><span th:text="${user.id}"></span ></td>
                         <td><span th:text="${user.firstName}"></span ></td>
                         <td><span th:text="${user.lastName}"></span ></td>
-                        <td><span th:text="${user.email}"></span ></td>
+                        <td><span th:text="${user.username}"></span ></td>
                         <td><span th:text="${user.password}"></span ></td>
-                        <td><span th:text="${user.active}"></span ></td>
-                        <td><span th:text="${user.roles}"></span ></td>
+                        <td><span th:text="${user.enabled}"></span ></td>
+                        <td><span th:text="${user.authorities}"></span ></td>
                     </tr>
                     </tbody>
                 </table>
@@ -47,6 +50,5 @@
 <footer th:replace="~{fragments/footer::footer}"></footer>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-<script type="text/javascript" th:src="@{/js/usersListApp.js}"></script>
 </body>
 </html>

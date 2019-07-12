@@ -40,17 +40,17 @@ public class UserService implements UserDetailsService {
                     .builder()
                     .firstName(userDTO.getFirstName())
                     .lastName(userDTO.getLastName())
-                    .email(userDTO.getEmail())
+                    .username(userDTO.getUsername())
                     .password(new BCryptPasswordEncoder().encode(userDTO.getPassword()))
-                    .active(true)
+                    .enabled(true)
                     //Temp usage of one hardcode role
-                    .roles(Collections.singleton(Role.USER))
+                    .authorities(Collections.singleton(Role.USER))
                     .build();
             repository.save(user);
             log.info("New user " + user);
         } catch (DataIntegrityViolationException e) {
-            log.error(userDTO.getEmail() + " - Login not unique");
-            throw new LoginNotUniqueException(userDTO.getEmail() + " - Login not unique", e);
+            log.error(userDTO.getUsername() + " - Login not unique");
+            throw new LoginNotUniqueException(userDTO.getUsername() + " - Login not unique", e);
         }
     }
 
@@ -68,7 +68,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByEmail(username);
+        User user = repository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(username);
