@@ -8,6 +8,8 @@ import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,13 +24,17 @@ import java.util.*;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository repository;
+    private final ReloadableResourceBundleMessageSource messageSource;
+    private final BCryptPasswordEncoder passwordEncorder;
 
     @Autowired
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository,
+                       ReloadableResourceBundleMessageSource messageSource,
+                       BCryptPasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.messageSource = messageSource;
+        this.passwordEncorder = passwordEncoder;
     }
-
-
 
     public List<User> findAllUsers() {
         return repository.findAll();
@@ -41,7 +47,7 @@ public class UserService implements UserDetailsService {
                     .firstName(userDTO.getFirstName())
                     .lastName(userDTO.getLastName())
                     .username(userDTO.getUsername())
-                    .password(new BCryptPasswordEncoder().encode(userDTO.getPassword()))
+                    .password(passwordEncorder.encode(userDTO.getPassword()))
                     .enabled(true)
                     //Temp usage of one hardcode role
                     .authorities(Collections.singleton(Role.USER))
@@ -49,8 +55,11 @@ public class UserService implements UserDetailsService {
             repository.save(user);
             log.info("New user " + user);
         } catch (DataIntegrityViolationException e) {
-            log.error(userDTO.getUsername() + " - Login not unique");
-            throw new LoginNotUniqueException(userDTO.getUsername() + " - Login not unique", e);
+            log.error("Login not unique: " + userDTO.getUsername());
+            throw new LoginNotUniqueException(messageSource.getMessage(
+                    "users.registration.login.not_unique",
+                    null,
+                    LocaleContextHolder.getLocale()) + userDTO.getUsername(), e);
         }
     }
 
