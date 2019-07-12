@@ -10,7 +10,7 @@
 <body ng-app="regFormApp">
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 <div class="container" ng-controller="regFormController">
-    <div class="card" style="margin-top: 60px">
+    <div class="card">
         <div class="card-header" th:text="#{registration.header}"></div>
         <div class="card-body">
             <form ng-submit="sendForm(regData)">

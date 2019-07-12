@@ -7,7 +7,7 @@
     <title>Navbar fragment</title>
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="/index">
         <img th:src="@{/images/stopwatch-white.svg}" class="d-inline-block align-top" alt="" width="30" height="30">
         Time-Tracker
@@ -19,6 +19,9 @@
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item active">
                 <a class="nav-link" href="/users" th:text="#{link.all_users}"></a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item active">
+                <a class="nav-link" href="/activities" th:text="#{link.all_activities}"></a>
             </li>
         </ul>
         <div class="form-inline my-2 my-lg-0" sec:authorize="!isAuthenticated()">

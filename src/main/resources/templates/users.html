@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card" style="margin-top: 60px">
+        <div class="card">
             <div class="card-header" th:text="#{users.header}">All registered users</div>
             <div class="card-body">
                 <table class="table table-striped">
@@ -28,14 +28,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="user in users">
-                        <td>{{user.id}}</td>
-                        <td>{{user.firstName}}</td>
-                        <td>{{user.lastName}}</td>
-                        <td>{{user.email}}</td>
-                        <td>{{user.password}}</td>
-                        <td>{{user.active}}</td>
-                        <td>{{user.roles}}</td>
+                    <tr th:each="user : ${users}">
+                        <td><span th:text="${user.id}"></span ></td>
+                        <td><span th:text="${user.firstName}"></span ></td>
+                        <td><span th:text="${user.lastName}"></span ></td>
+                        <td><span th:text="${user.email}"></span ></td>
+                        <td><span th:text="${user.password}"></span ></td>
+                        <td><span th:text="${user.active}"></span ></td>
+                        <td><span th:text="${user.roles}"></span ></td>
                     </tr>
                     </tbody>
                 </table>
