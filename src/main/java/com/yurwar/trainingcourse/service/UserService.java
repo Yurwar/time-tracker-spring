@@ -1,10 +1,7 @@
 package com.yurwar.trainingcourse.service;
 
-import com.yurwar.trainingcourse.dto.LoginUserDTO;
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.exception.IncorrectPasswordException;
 import com.yurwar.trainingcourse.exception.LoginNotUniqueException;
-import com.yurwar.trainingcourse.exception.NoSuchUserException;
 import com.yurwar.trainingcourse.model.Activity;
 import com.yurwar.trainingcourse.model.Role;
 import com.yurwar.trainingcourse.model.User;
@@ -57,23 +54,6 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User loginUser(LoginUserDTO userDTO) {
-        User user = repository.findByEmail(userDTO.getEmail());
-
-        if(user == null) {
-            log.warn(userDTO + " there is no such user record in database");
-            throw new NoSuchUserException("Invalid credentials");
-        }
-
-        if (!userDTO.getPassword().equals(user.getPassword())) {
-            log.warn(userDTO + " incorrect password");
-            throw new IncorrectPasswordException("Invalid credentials");
-        }
-
-        log.info(userDTO + " user successfully logged in");
-        return user;
-    }
-
     @Transactional
     public void addActivity(Long userId, Activity activity) {
         User user = repository.getOne(userId);
@@ -87,11 +67,11 @@ public class UserService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = repository.findByEmail(s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findByEmail(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("No such user exception");
+            throw new UsernameNotFoundException(username);
         }
 
         return user;
