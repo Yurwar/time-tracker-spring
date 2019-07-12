@@ -16,10 +16,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "activities")
-@SequenceGenerator(name = "activitySeq", sequenceName = "activities_id_seq")
 public class Activity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activitySeq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
