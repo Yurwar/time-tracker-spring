@@ -1,13 +1,11 @@
 package com.yurwar.trainingcourse.service;
 
+import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.model.Activity;
-import com.yurwar.trainingcourse.model.ActivityImportance;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
-import com.yurwar.trainingcourse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,33 +18,14 @@ public class ActivityService {
     }
 
 
-    public List<Activity> findAll() {
+    public List<Activity> findAllActivities() {
         return activityRepository.findAll();
     }
 
-    public void save() {
+    public void addActivity(ActivityDTO activityDTO) {
         activityRepository.save(Activity.builder()
-                .name("Test activity #1")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
-                .finished(false)
-                .build());
-        activityRepository.save(Activity.builder()
-                .name("Test activity #2")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
-                .finished(false)
-                .build());
-        activityRepository.save(Activity.builder()
-                .name("Test activity #3")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
-                .finished(false)
-                .build());
-        activityRepository.save(Activity.builder()
-                .name("Test activity #4")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
+                .name(activityDTO.getName())
+                .importance(activityDTO.getImportance())
                 .finished(false)
                 .build());
     }

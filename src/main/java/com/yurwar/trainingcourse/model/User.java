@@ -2,11 +2,9 @@ package com.yurwar.trainingcourse.model;
 
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 @Builder
 @EqualsAndHashCode
 @Entity
@@ -51,7 +50,7 @@ public class User implements UserDetails {
     private List<Activity> activities;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<ActivityRequest> activity_requests;
+    private List<ActivityRequest> activityRequests;
 
 
     @Override

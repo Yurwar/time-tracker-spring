@@ -1,7 +1,10 @@
 package com.yurwar.trainingcourse.dto;
 
 
+import com.yurwar.trainingcourse.model.Role;
 import lombok.*;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,4 +16,5 @@ public class RegistrationUserDTO {
     private String lastName;
     private String username;
     private String password;
+    private Set<Role> authorities;
 }

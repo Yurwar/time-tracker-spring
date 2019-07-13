@@ -10,34 +10,38 @@
 <body>
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<form>
-
-</form>
-
-<div th:if="${activities.isEmpty()}">
-    <td colspan="2"> No activities available </td>
+<div class="container">
+    <div th:if="${activities.isEmpty()}">
+        <p> No activities available </p>
+    </div>
+    <div th:unless="${activities.isEmpty()}" class="row">
+        <div th:each="activity : ${activities}" class="col-md-3">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <p><span th:text="${activity.name}"></span></p>
+                </div>
+                <div class="card-body">
+                    <p><span>Id: </span><span th:text="${activity.id}"></span></p>
+                    <p><span>Importance: </span><span th:text="${activity.importance}"></span></p>
+                    <p><span>Start time: </span><span th:text="${activity.startTime}"></span></p>
+                    <p><span>End time: </span><span th:text="${activity.endTime}"></span></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-secondary">Edit</button>
+                            <button type="button" class="btn btn-sm btn-secondary">Delete</button>
+                        </div>
+                        <small>
+                            <span>Finished: </span><span th:text="${activity.finished}"></span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<table th:unless="${activities.isEmpty()}" class="table table-striped">
-    <thead>
-    <tr>
-        <th> Id </th>
-        <th> Name </th>
-        <th> Importance </th>
-        <th> Start Time </th>
-        <th> End Time </th>
-        <th> Finished </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="activity : ${activities}">
-        <td><span th:text="${activity.id}"> Id </span></td>
-        <td><span th:text="${activity.firstName}"> Name </span></td>
-        <td><span th:text="${activity.importance}"> Importance </span></td>
-        <td><span th:text="${activity.startTime}"> Start Time </span></td>
-        <td><span th:text="${activity.endTime}"> End Time </span></td>
-        <td><span th:text="${activity.finished}"> Finished </span></td>
-    </tr>
-    </tbody>
-</table>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

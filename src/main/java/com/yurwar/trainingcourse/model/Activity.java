@@ -27,7 +27,7 @@ public class Activity {
     @Enumerated(value = EnumType.STRING)
     private ActivityImportance importance;
 
-    @Column(name = "start_time", nullable = false)
+    @Column(name = "start_time")
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime startTime;
 
