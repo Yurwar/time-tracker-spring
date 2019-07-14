@@ -2,6 +2,7 @@ package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.model.Activity;
+import com.yurwar.trainingcourse.model.ActivityStatus;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,11 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
-    public void addActivity(ActivityDTO activityDTO) {
+    public void addNewActivity(ActivityDTO activityDTO) {
         activityRepository.save(Activity.builder()
                 .name(activityDTO.getName())
                 .importance(activityDTO.getImportance())
-                .finished(false)
+                .status(ActivityStatus.PENDING)
                 .build());
     }
 
@@ -36,6 +37,9 @@ public class ActivityService {
     }
 
     public void deleteActivity(Activity activity) {
+        activity.getUsers().forEach((user) -> {
+            user.getActivities().remove(activity);
+        });
         activityRepository.delete(activity);
     }
 }
