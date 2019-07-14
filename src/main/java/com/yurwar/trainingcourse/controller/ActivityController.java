@@ -38,11 +38,10 @@ public class ActivityController {
     @PostMapping("/activities/add")
     public String addActivity(ActivityDTO activityDTO, Model model) {
         log.info(activityDTO);
-        activityService.addActivity(activityDTO);
+        activityService.addNewActivity(activityDTO);
         model.addAttribute("message", "Activity added success");
-        model.addAttribute("activity", activityDTO);
-        model.addAttribute("importanceLevels", ActivityImportance.values());
-        return "add-activity";
+
+        return getActivitiesPage(model);
     }
 
     @PostMapping("/activities/delete/{id}")
@@ -50,7 +49,7 @@ public class ActivityController {
                                  Model model) {
         Activity activity = activityService.findActivityById(activityId);
         activityService.deleteActivity(activity);
-        model.addAttribute("activities", activityService.findAllActivities());
-        return "activities";
+
+        return getActivitiesPage(model);
     }
 }

@@ -29,6 +29,9 @@ public class Activity {
     @Enumerated(value = EnumType.STRING)
     private ActivityImportance importance;
 
+    @Enumerated(value = EnumType.STRING)
+    private ActivityStatus status;
+
     @Column(name = "start_time")
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime startTime;
@@ -36,9 +39,6 @@ public class Activity {
     @Column(name = "end_time")
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime endTime;
-
-    @Column(nullable = false)
-    private boolean finished;
 
     @ManyToMany(mappedBy = "activities")
     private Set<User> users;

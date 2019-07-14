@@ -24,7 +24,7 @@
                     <p><span>Id: </span><span th:text="${activity.id}"></span></p>
                     <p><span>Importance: </span><span th:text="${activity.importance}"></span></p>
                     <p><span>Start time: </span><span th:text="${#temporals.format(activity.startTime, 'dd.MM.yyyy HH:mm')}"></span></p>
-                    <p><span>End time: </span><span th:text="${activity.endTime}"></span></p>
+                    <p><span>End time: </span><span th:text="${#temporals.format(activity.endTime, 'dd.MM.yyyy HH:mm')}"></span></p>
                     <p>
                         <span>Users: </span>
                         <span th:each="user : ${activity.users}">
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <small>
-                        <span>Finished: </span><span th:text="${activity.finished}"></span>
+                        <span>Status: </span><span th:text="${activity.status}"></span>
                     </small>
                 </div>
             </div>

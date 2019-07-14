@@ -25,6 +25,10 @@ public class ActivityRequest {
     @ManyToOne(fetch = FetchType.EAGER)
     private Activity activity;
 
+    @Column(name = "action")
+    @Enumerated(value = EnumType.STRING)
+    private ActivityRequestAction action;
+
     @Column(name = "request_date")
     private LocalDateTime requestDate;
 }
