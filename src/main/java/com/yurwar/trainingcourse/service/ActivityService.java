@@ -29,4 +29,13 @@ public class ActivityService {
                 .finished(false)
                 .build());
     }
+
+    public Activity findActivityById(long id) {
+        return activityRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid activity id: " + id));
+    }
+
+    public void deleteActivity(Activity activity) {
+        activityRepository.delete(activity);
+    }
 }

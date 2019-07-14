@@ -40,4 +40,7 @@ public class Activity {
 
     @ManyToMany(mappedBy = "activities")
     private Set<User> users;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+    private Set<ActivityRequest> activityRequests;
 }

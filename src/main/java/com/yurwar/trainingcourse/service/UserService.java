@@ -1,11 +1,12 @@
 package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.exception.LoginNotUniqueException;
+import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
 import com.yurwar.trainingcourse.model.Activity;
 import com.yurwar.trainingcourse.model.ActivityRequest;
 import com.yurwar.trainingcourse.model.Role;
 import com.yurwar.trainingcourse.model.User;
+import com.yurwar.trainingcourse.repository.ActivityRepository;
 import com.yurwar.trainingcourse.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -28,16 +28,19 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final ActivityRepository activityRepository;
     private final MessageSource messageSource;
-    private final PasswordEncoder passwordEncorder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository,
+                       ActivityRepository activityRepository,
                        MessageSource messageSource,
                        PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.activityRepository = activityRepository;
         this.messageSource = messageSource;
-        this.passwordEncorder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -55,8 +58,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUserById(long id) {
-        return userRepository.findById(id);
+    public User findUserById(long id) {
+        return userRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid user id: " + id));
     }
 
     public void saveUser(RegistrationUserDTO userDTO) {
@@ -66,7 +70,7 @@ public class UserService implements UserDetailsService {
                     .firstName(userDTO.getFirstName())
                     .lastName(userDTO.getLastName())
                     .username(userDTO.getUsername())
-                    .password(passwordEncorder.encode(userDTO.getPassword()))
+                    .password(passwordEncoder.encode(userDTO.getPassword()))
                     .enabled(true)
                     //Temp usage of one hardcode role
                     .authorities(Collections.singleton(Role.USER))
@@ -90,24 +94,4 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    @Transactional
-    public void addActivityRequest(Long userId, Activity activity) {
-        User user = userRepository.getOne(userId);
-        user.getActivityRequests().add(ActivityRequest.builder()
-                .user(user)
-                .activity(activity)
-                .build());
-        userRepository.save(user);
-    }
-
-    public void addActivityRequest(Long userId, Activity... activities) {
-        User user = userRepository.getOne(userId);
-        Arrays.stream(activities).forEach(activity -> user
-                .getActivityRequests()
-                .add(ActivityRequest.builder()
-                        .user(user)
-                        .activity(activity)
-                        .build()));
-        userRepository.save(user);
-    }
 }

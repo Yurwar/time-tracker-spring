@@ -5,6 +5,7 @@ import com.yurwar.trainingcourse.model.Role;
 import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +21,12 @@ import javax.validation.Valid;
 @RequestMapping
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/users")
@@ -37,24 +37,23 @@ public class UserController {
 
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable("id") long id, Model model) {
-        User userToDelete = userService.findUserById(id).orElseThrow(() ->
-                new IllegalArgumentException("Invalid user id: " + id));
+        User userToDelete = userService.findUserById(id);
+
         userService.deleteUser(userToDelete);
         model.addAttribute("users", userService.findAllUsers());
         return "users";
     }
 
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/users/update/{id}")
     public String getUserUpdatePage(@PathVariable("id") long id, Model model) {
-        User user = userService.findUserById(id).orElseThrow(() ->
-                new IllegalArgumentException("Invalid user id: " + id));
+        User user = userService.findUserById(id);
 
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "update-user";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/users/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              @Valid RegistrationUserDTO userDTO,
                              BindingResult bindingResult,
@@ -62,7 +61,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "update-user";
         }
-        User user = userService.findUserById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user id: " + id));
+        User user = userService.findUserById(id);
+
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setUsername(userDTO.getUsername());

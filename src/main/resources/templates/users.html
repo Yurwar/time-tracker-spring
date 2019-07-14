@@ -42,7 +42,7 @@
                         <td><span th:text="${user.enabled}"></span ></td>
                         <td><span th:text="${user.authorities}"></span ></td>
                         <td>
-                            <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-primary">
+                            <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary">
                                 <img th:src="@{/images/outline-edit-24px.svg}">
                             </a>
                         </td>
