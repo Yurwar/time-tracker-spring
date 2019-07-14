@@ -29,6 +29,10 @@ public class ActivityRequest {
     @Enumerated(value = EnumType.STRING)
     private ActivityRequestAction action;
 
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private ActivityRequestStatus status;
+
     @Column(name = "request_date")
     private LocalDateTime requestDate;
 }

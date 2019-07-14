@@ -1,15 +1,17 @@
 package com.yurwar.trainingcourse.controller;
 
+import com.yurwar.trainingcourse.model.ActivityRequest;
+import com.yurwar.trainingcourse.model.ActivityRequestAction;
 import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.service.ActivityRequestService;
 import com.yurwar.trainingcourse.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ActivityRequestController {
@@ -33,15 +35,31 @@ public class ActivityRequestController {
     @PostMapping("/activities/request/{id}")
     public String makeActivityRequest(@AuthenticationPrincipal User user,
                                       @PathVariable("id") long activityId,
+                                      @RequestParam String action,
                                       Model model) {
-        activityRequestService.addActivityRequest(user.getId(), activityId);
+        activityRequestService.addActivityRequest(user.getId(), activityId, action);
         return activityController.getActivitiesPage(model);
     }
 
     @PostMapping("/activities/request/approve/{id}")
     public String approveActivityRequest(@PathVariable("id") long activityRequestId,
                                          Model model) {
-        activityRequestService.approveActivityRequest(activityRequestId);
+        ActivityRequest activityRequest = activityRequestService
+                .findActivityRequestById(activityRequestId);
+
+        if (activityRequest.getStatus() != null) {
+            return getActivityRequests(model);
+        }
+
+        ActivityRequestAction action = activityRequest.getAction();
+        switch (action) {
+            case ADD:
+                activityRequestService.approveAddActivityRequest(activityRequestId);
+                break;
+            case REMOVE:
+                activityRequestService.approveRemoveActivityRequest(activityRequestId);
+                break;
+        }
 
         return getActivityRequests(model);
     }
@@ -49,8 +67,11 @@ public class ActivityRequestController {
     @PostMapping("/activities/request/reject/{id}")
     public String rejectActivityRequest(@PathVariable("id") long activityRequestId,
                                         Model model) {
-        activityRequestService.rejectActivityRequest(activityRequestId);
+        if (activityRequestService.findActivityRequestById(activityRequestId).getStatus() != null) {
+            return getActivityRequests(model);
+        }
 
+        activityRequestService.rejectActivityRequest(activityRequestId);
         return getActivityRequests(model);
     }
 }

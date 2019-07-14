@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="time_tracker_db@localhost" uuid="c1ca562e-284d-40ff-b579-7babc2bff73c">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db</jdbc-url>
-    </data-source>
     <data-source source="LOCAL" name="MySQL for 5.1 - task_site@localhost" uuid="1913b7c9-0c88-4762-a629-40dd0942a406">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -34,6 +28,18 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="time_tracker_db@localhost" uuid="4e0badd2-63ee-47eb-a4e2-5b306b070acc">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="testdb@localhost" uuid="0171276e-f2f4-422c-ba99-f80e5573c8e9">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/testdb</jdbc-url>
     </data-source>
   </component>
 </project>

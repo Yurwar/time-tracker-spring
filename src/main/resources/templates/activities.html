@@ -21,15 +21,15 @@
                     <p><span th:text="${activity.name}"></span></p>
                 </div>
                 <div class="card-body">
+                    <p><span th:text="${activity.description}"></span></p>
+                </div>
+                <div class="card-footer">
                     <p><span>Id: </span><span th:text="${activity.id}"></span></p>
                     <p><span>Importance: </span><span th:text="${activity.importance}"></span></p>
                     <p><span>Start time: </span><span th:text="${#temporals.format(activity.startTime, 'dd.MM.yyyy HH:mm')}"></span></p>
                     <p><span>End time: </span><span th:text="${#temporals.format(activity.endTime, 'dd.MM.yyyy HH:mm')}"></span></p>
                     <p>
-                        <span>Users: </span>
-                        <span th:each="user : ${activity.users}">
-                            <span th:text="${user.username}"></span>
-                        </span>
+                        <span>User: </span><span th:text="${activity.user?.username}"></span>
                     </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
@@ -40,7 +40,12 @@
                                 <button type="submit" class="btn btn-sm btn-secondary">Delete</button>
                             </form>
                             <form th:action="@{/activities/request/{id}(id=${activity.id})}" method="post">
+                                <input hidden name="action" th:value="ADD" />
                                 <button type="submit" class="btn btn-sm btn-secondary">Request to add</button>
+                            </form>
+                            <form th:action="@{/activities/request/{id}(id=${activity.id})}" method="post">
+                                <input hidden name="action" th:value="REMOVE" />
+                                <button type="submit" class="btn btn-sm btn-secondary">Request to remove</button>
                             </form>
                         </div>
                     </div>

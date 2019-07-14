@@ -27,6 +27,8 @@
                     <p><span>Id: </span><span th:text="${activityRequest.id}"></span></p>
                     <p><span>Activity id: </span><span th:text="${activityRequest.activity.id}"></span></p>
                     <p><span>User id: </span><span th:text="${activityRequest.user.id}"></span></p>
+                    <p><span>Action: </span><span th:text="${activityRequest.action}"></span></p>
+                    <p><span>Status: </span><span th:text="${activityRequest.status}"></span></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <form th:action="@{/activities/request/approve/{id}(id=${activityRequest.id})}" method="post">

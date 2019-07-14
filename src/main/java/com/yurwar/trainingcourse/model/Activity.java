@@ -11,8 +11,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"users", "activityRequests"})
-@ToString(exclude = {"users", "activityRequests"})
+@EqualsAndHashCode(exclude = {"activityRequests"})
+@ToString(exclude = {"activityRequests"})
 @Entity
 @Table(name = "activities")
 public class Activity {
@@ -40,8 +40,9 @@ public class Activity {
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime endTime;
 
-    @ManyToMany(mappedBy = "activities")
-    private Set<User> users;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "activity_id")
+    private User user;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private Set<ActivityRequest> activityRequests;
