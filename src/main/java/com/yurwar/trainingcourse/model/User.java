@@ -10,11 +10,11 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"activities", "activityRequests"})
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"activities", "activityRequests"})
 @Entity
 @Table(name = "registered_users")
 public class User implements UserDetails {
