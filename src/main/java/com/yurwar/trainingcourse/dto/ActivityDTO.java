@@ -10,5 +10,6 @@ import lombok.*;
 @ToString
 public class ActivityDTO {
     private String name;
+    private String description;
     private ActivityImportance importance;
 }

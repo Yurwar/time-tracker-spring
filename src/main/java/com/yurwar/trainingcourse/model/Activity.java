@@ -1,10 +1,7 @@
 package com.yurwar.trainingcourse.model;
 
 import com.yurwar.trainingcourse.util.converter.LocalDateTimeConverter;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +11,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"users", "activityRequests"})
+@ToString(exclude = {"users", "activityRequests"})
 @Entity
 @Table(name = "activities")
 public class Activity {
@@ -23,6 +22,9 @@ public class Activity {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(length = 500)
+    private String description;
 
     @Enumerated(value = EnumType.STRING)
     private ActivityImportance importance;
