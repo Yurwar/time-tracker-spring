@@ -1,9 +1,11 @@
 package com.yurwar.trainingcourse.model;
 
+import com.yurwar.trainingcourse.util.converter.DurationConverter;
 import com.yurwar.trainingcourse.util.converter.LocalDateTimeConverter;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -39,6 +41,10 @@ public class Activity {
     @Column(name = "end_time")
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime endTime;
+
+    @Column(name = "duration")
+    @Convert(converter = DurationConverter.class)
+    private Duration duration;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activity_id")

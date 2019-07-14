@@ -1,6 +1,7 @@
 package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
+import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
 import com.yurwar.trainingcourse.model.Activity;
 import com.yurwar.trainingcourse.model.ActivityImportance;
 import com.yurwar.trainingcourse.service.ActivityService;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Log4j2
 @Controller
@@ -36,7 +39,8 @@ public class ActivityController {
     }
 
     @PostMapping("/activities/add")
-    public String addActivity(ActivityDTO activityDTO, Model model) {
+    public String addActivity(ActivityDTO activityDTO,
+                              Model model) {
         log.info(activityDTO);
         activityService.addNewActivity(activityDTO);
         model.addAttribute("message", "Activity added success");
@@ -49,6 +53,17 @@ public class ActivityController {
                                  Model model) {
         Activity activity = activityService.findActivityById(activityId);
         activityService.deleteActivity(activity);
+
+        return getActivitiesPage(model);
+    }
+
+    @PostMapping("/activities/mark-time/{id}")
+    public String markTimeSpent(@PathVariable("id") long activityId,
+                                ActivityDurationDTO durationDTO,
+                                Model model) {
+
+        log.info(durationDTO);
+        activityService.markTimeSpent(activityId, durationDTO);
 
         return getActivitiesPage(model);
     }

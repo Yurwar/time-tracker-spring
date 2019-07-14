@@ -1,6 +1,7 @@
 package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
+import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
 import com.yurwar.trainingcourse.model.Activity;
 import com.yurwar.trainingcourse.model.ActivityStatus;
 import com.yurwar.trainingcourse.model.User;
@@ -8,6 +9,7 @@ import com.yurwar.trainingcourse.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -33,9 +35,9 @@ public class ActivityService {
                 .build());
     }
 
-    public Activity findActivityById(long id) {
-        return activityRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("Invalid activity id: " + id));
+    public Activity findActivityById(long activityId) {
+        return activityRepository.findById(activityId).orElseThrow(() ->
+                new IllegalArgumentException("Invalid activity id: " + activityId));
     }
 
     public void deleteActivity(Activity activity) {
@@ -44,5 +46,18 @@ public class ActivityService {
             user.getActivities().remove(activity);
         }
         activityRepository.delete(activity);
+    }
+
+    public void markTimeSpent(long activityId, ActivityDurationDTO durationDTO) {
+        Activity activity = findActivityById(activityId);
+        Duration duration = activity.getDuration();
+
+        duration = duration.plusDays(durationDTO.getDays());
+        duration = duration.plusHours(durationDTO.getHours());
+        duration = duration.plusMinutes(durationDTO.getMinutes());
+
+        activity.setDuration(duration);
+
+        activityRepository.save(activity);
     }
 }

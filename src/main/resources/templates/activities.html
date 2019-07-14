@@ -15,7 +15,7 @@
         <p> No activities available </p>
     </div>
     <div th:unless="${activities.isEmpty()}" class="row">
-        <div th:each="activity : ${activities}" class="col-md-3">
+        <div th:each="activity : ${activities}" class="col-md-4">
             <div class="card mb-4 shadow-sm">
                 <div class="card-header">
                     <p><span th:text="${activity.name}"></span></p>
@@ -28,6 +28,7 @@
                     <p><span>Importance: </span><span th:text="${activity.importance}"></span></p>
                     <p><span>Start time: </span><span th:text="${#temporals.format(activity.startTime, 'dd.MM.yyyy HH:mm')}"></span></p>
                     <p><span>End time: </span><span th:text="${#temporals.format(activity.endTime, 'dd.MM.yyyy HH:mm')}"></span></p>
+                    <p><span>Duration: </span><span th:text="${activity.duration.toMinutes()}"></span></p>
                     <p>
                         <span>User: </span><span th:text="${activity.user?.username}"></span>
                     </p>
@@ -47,6 +48,44 @@
                                 <input hidden name="action" th:value="REMOVE" />
                                 <button type="submit" class="btn btn-sm btn-secondary">Request to remove</button>
                             </form>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                Launch demo modal
+                            </button>
+
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="timeSpentModal">Enter amount of time spent</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form th:action="@{/activities/mark-time/{id}(id=${activity.id})}" method="post">
+                                            <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Days</span>
+                                                    </div>
+                                                    <input name="days" type="number" class="form-control" aria-label="days">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Hours</span>
+                                                    </div>
+                                                    <input name="hours" type="number" class="form-control" aria-label="hours">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Minutes</span>
+                                                    </div>
+                                                    <input name="minutes" type="number" class="form-control" aria-label="minutes">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Mark time spent</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <small>
