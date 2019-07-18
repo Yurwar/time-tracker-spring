@@ -3,4 +3,8 @@
   <component name="SqlDialectMappings">
     <file url="PROJECT" dialect="PostgreSQL" />
   </component>
+  <component name="SqlResolveMappings">
+    <file url="file://$PROJECT_DIR$/../BLOCK12/task_site.sql" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@name&quot;:&quot;0171276e-f2f4-422c-ba99-f80e5573c8e9&quot;,     &quot;@quoted&quot;:&quot;1&quot;    },    &quot;name&quot;:{     &quot;@name&quot;:&quot;1913b7c9-0c88-4762-a629-40dd0942a406&quot;,     &quot;@quoted&quot;:&quot;1&quot;    },    &quot;name&quot;:{     &quot;@name&quot;:&quot;4e0badd2-63ee-47eb-a4e2-5b306b070acc&quot;,     &quot;@quoted&quot;:&quot;1&quot;    },    &quot;name&quot;:{     &quot;@name&quot;:&quot;5b843f3a-1bb9-4030-8e23-c2f486b5dc75&quot;,     &quot;@quoted&quot;:&quot;1&quot;    }   }  } }}" />
+    <file url="PROJECT" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@name&quot;:&quot;0171276e-f2f4-422c-ba99-f80e5573c8e9&quot;,     &quot;@quoted&quot;:&quot;1&quot;    },    &quot;name&quot;:{     &quot;@name&quot;:&quot;1913b7c9-0c88-4762-a629-40dd0942a406&quot;,     &quot;@quoted&quot;:&quot;1&quot;    },    &quot;name&quot;:{     &quot;@name&quot;:&quot;4e0badd2-63ee-47eb-a4e2-5b306b070acc&quot;,     &quot;@quoted&quot;:&quot;1&quot;    },    &quot;name&quot;:{     &quot;@name&quot;:&quot;5b843f3a-1bb9-4030-8e23-c2f486b5dc75&quot;,     &quot;@quoted&quot;:&quot;1&quot;    }   }  } }}" />
+  </component>
 </project>

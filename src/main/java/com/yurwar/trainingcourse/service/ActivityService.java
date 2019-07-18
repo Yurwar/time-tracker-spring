@@ -31,6 +31,7 @@ public class ActivityService {
                 .name(activityDTO.getName())
                 .description(activityDTO.getDescription())
                 .importance(activityDTO.getImportance())
+                .duration(Duration.ZERO)
                 .status(ActivityStatus.PENDING)
                 .build());
     }
@@ -48,6 +49,7 @@ public class ActivityService {
         activityRepository.delete(activity);
     }
 
+    //TODO add user check
     public void markTimeSpent(long activityId, ActivityDurationDTO durationDTO) {
         Activity activity = findActivityById(activityId);
         Duration duration = activity.getDuration();
