@@ -10,11 +10,6 @@ public class PageController {
         return "index";
     }
 
-    @GetMapping("/users")
-    public String getUsersPage() {
-        return "users";
-    }
-
     @GetMapping("/access-denied")
     public String getAccessDeniedPage() {
         return "/error/access-denied";

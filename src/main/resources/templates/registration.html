@@ -10,12 +10,12 @@
 <body ng-app="regFormApp">
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 <div class="container" ng-controller="regFormController">
-    <div class="card" style="margin-top: 60px">
+    <div class="card">
         <div class="card-header" th:text="#{registration.header}"></div>
         <div class="card-body">
-            <form ng-submit="sendForm(regData)">
+            <form th:action="@{/registration}" method="post">
                 <div class="form-row">
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label id="firstNameLabel" for="firstName" th:text="#{registration.first_name.label}"></label>
                         <input type="text"
                                name="firstName"
@@ -23,9 +23,9 @@
                                th:placeholder="#{registration.first_name.placeholder}"
                                class="form-control"
                                required
-                               ng-model="regData.firstName"/>
+                        />
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label for="lastName" th:text="#{registration.last_name.label}"></label>
                         <input type="text"
                                name="lastName"
@@ -33,21 +33,21 @@
                                th:placeholder="#{registration.last_name.placeholder}"
                                class="form-control"
                                required
-                               ng-model="regData.lastName"/>
+                        />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="col-md-2 mb-3">
-                        <label id="emailLabel" for="email" th:text="#{registration.email.label}"></label>
-                        <input type="email"
-                               name="email"
-                               id="email"
-                               th:placeholder="#{registration.email.placeholder}"
+                    <div class="col-md-3 mb-3">
+                        <label id="usernameLabel" for="username" th:text="#{registration.username.label}"></label>
+                        <input type="text"
+                               name="username"
+                               id="username"
+                               th:placeholder="#{registration.username.placeholder}"
                                class="form-control"
                                required
-                               ng-model="regData.email"/>
+                        />
                     </div>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label for="password" th:text="#{registration.password.label}"></label>
                         <input type="password"
                                name="password"
@@ -55,13 +55,13 @@
                                th:placeholder="#{registration.password.placeholder}"
                                class="form-control"
                                required
-                               ng-model="regData.password">
+                        />
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success" th:text="#{button.signup}">Sign up</button>
             </form>
         </div>
-        <div id="regResMsg" class="card-footer">{{message}}</div>
+        <div id="resultMessage" class="card-footer" th:text="${resultMessage}"></div>
     </div>
 </div>
 

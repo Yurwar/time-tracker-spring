@@ -1,39 +1,39 @@
 package com.yurwar.trainingcourse.config;
 
+import com.yurwar.trainingcourse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final DataSource dataSource;
+    private final UserService userService;
     private final AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
-    public WebSecurityConfig(DataSource dataSource, AccessDeniedHandler accessDeniedHandler) {
-        this.dataSource = dataSource;
+    public WebSecurityConfig(UserService userService, AccessDeniedHandler accessDeniedHandler) {
+        this.userService = userService;
         this.accessDeniedHandler = accessDeniedHandler;
     }
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery("select email, password, active from registered_users where email=?")
-                .authoritiesByUsernameQuery("select u.email, ur.roles from registered_users u inner join user_role ur on u.id = ur.user_id where u.email = ?");
+        auth
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -42,15 +42,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/js/**", "/css/**", "/index", "/registration", "/access-denied")
+                    .antMatchers("/js/**", "/css/**", "/index", "/access-denied")
                     .permitAll()
-                    .antMatchers("/users/**")
+                    .antMatchers("/users/**", "/api/user")
                     .hasAuthority("ADMIN")
+                    .antMatchers("/registration")
+                    .anonymous()
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .failureUrl("/login?error")
-                    .usernameParameter("email")
+                    .usernameParameter("username")
                     .permitAll()
                 .and()
                     .logout()

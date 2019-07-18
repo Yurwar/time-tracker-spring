@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>All users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+
+<form>
+
+</form>
+
+<div th:if="${activities.isEmpty()}">
+    <td colspan="2"> No activities available </td>
+</div>
+<table th:unless="${activities.isEmpty()}" class="table table-striped">
+    <thead>
+    <tr>
+        <th> Id </th>
+        <th> Name </th>
+        <th> Importance </th>
+        <th> Start Time </th>
+        <th> End Time </th>
+        <th> Finished </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="activity : ${activities}">
+        <td><span th:text="${activity.id}"> Id </span></td>
+        <td><span th:text="${activity.firstName}"> Name </span></td>
+        <td><span th:text="${activity.importance}"> Importance </span></td>
+        <td><span th:text="${activity.startTime}"> Start Time </span></td>
+        <td><span th:text="${activity.endTime}"> End Time </span></td>
+        <td><span th:text="${activity.finished}"> Finished </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

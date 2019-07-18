@@ -1,16 +1,14 @@
 package com.yurwar.trainingcourse.controller;
 
-import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/user")
+@Controller
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -20,7 +18,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getListOfUsers() {
-        return userService.findAllUsers();
+    public String getListOfUsers(Model model) {
+        model.addAttribute("users", userService.findAllUsers());
+        return "users";
     }
 }
