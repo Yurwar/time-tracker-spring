@@ -1,48 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Registration form</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body ng-app="regFormApp">
-<div class="container-fluid" ng-controller="regFormController">
-    <ul class="nav nav-tabs nav-fill bg-light">
-        <li class="nav-item">
-            <a class="nav-link" href="/index">Main page</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="/registration">Registration form</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/users">All users</a>
-        </li>
-    </ul>
-
-    <div class="card">
-        <div class="card-header">User registration form</div>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+<div class="container" ng-controller="regFormController">
+    <div class="card" style="margin-top: 60px">
+        <div class="card-header" th:text="#{registration.header}"></div>
         <div class="card-body">
             <form ng-submit="sendForm(regData)">
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
-                        <label id="firstNameLabel" for="firstName">First name:</label>
+                        <label id="firstNameLabel" for="firstName" th:text="#{registration.first_name.label}"></label>
                         <input type="text"
                                name="firstName"
                                id="firstName"
-                               placeholder="Enter first name"
+                               th:placeholder="#{registration.first_name.placeholder}"
                                class="form-control"
                                required
                                ng-model="regData.firstName"/>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="lastName">Last name:</label>
+                        <label for="lastName" th:text="#{registration.last_name.label}"></label>
                         <input type="text"
                                name="lastName"
                                id="lastName"
-                               placeholder="Enter last name"
+                               th:placeholder="#{registration.last_name.placeholder}"
                                class="form-control"
                                required
                                ng-model="regData.lastName"/>
@@ -50,35 +38,36 @@
                 </div>
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
-                        <label id="emailLabel" for="email">Email:</label>
+                        <label id="emailLabel" for="email" th:text="#{registration.email.label}"></label>
                         <input type="email"
                                name="email"
                                id="email"
-                               placeholder="Enter email"
+                               th:placeholder="#{registration.email.placeholder}"
                                class="form-control"
                                required
                                ng-model="regData.email"/>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="password">Password:</label>
+                        <label for="password" th:text="#{registration.password.label}"></label>
                         <input type="password"
                                name="password"
                                id="password"
-                               placeholder="Enter password"
+                               th:placeholder="#{registration.password.placeholder}"
                                class="form-control"
                                required
                                ng-model="regData.password">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success">Sign up</button>
+                <button type="submit" class="btn btn-success" th:text="#{button.signup}">Sign up</button>
             </form>
         </div>
-        <div id="regResMsg" ng-attr-title="{{this[message]}}" class="card-footer">{{message}}</div>
+        <div id="regResMsg" class="card-footer">{{message}}</div>
     </div>
 </div>
 
+<footer th:replace="~{fragments/footer::footer}"></footer>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-<script type="text/javascript" src="js/regFormApp.js"></script>
+<script type="text/javascript" th:src="@{/js/regFormApp.js}"></script>
 </body>
 </html>

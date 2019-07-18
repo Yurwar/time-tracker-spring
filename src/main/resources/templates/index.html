@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <title>Time-tracker</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        body {
+            padding-top: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+<main role="main">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4" th:text="#{index.main.name}"></h1>
+            <p th:text="#{index.main.desc}"></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3 th:text="#{index.secondary.column1.name}"></h3>
+                <p th:text="#{index.secondary.column1.desc}"></p>
+            </div>
+            <div class="col-md-4">
+                <h3 th:text="#{index.secondary.column2.name}"></h3>
+                <p th:text="#{index.secondary.column2.desc}"></p>
+            </div>
+            <div class="col-md-4">
+                <h3 th:text="#{index.secondary.column3.name}"></h3>
+                <p th:text="#{index.secondary.column3.desc}"></p>
+            </div>
+        </div>
+        <hr>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer::footer}"></footer>
+</body>
+</html>

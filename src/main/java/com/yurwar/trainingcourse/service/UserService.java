@@ -11,6 +11,7 @@ import com.yurwar.trainingcourse.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,6 +27,7 @@ public class UserService {
     }
 
 
+
     public List<User> findAllUsers() {
         return new ArrayList<>(repository.findAll());
     }
@@ -37,9 +39,9 @@ public class UserService {
                     .firstName(userDTO.getFirstName())
                     .lastName(userDTO.getLastName())
                     .email(userDTO.getEmail())
-                    .password(userDTO.getPassword())
+                    .password(new BCryptPasswordEncoder().encode(userDTO.getPassword()))
                     .active(true)
-                    //Tmp usage of only one role
+                    //Temp usage of one hardcode role
                     .roles(Collections.singleton(Role.USER))
                     .build();
             repository.save(user);

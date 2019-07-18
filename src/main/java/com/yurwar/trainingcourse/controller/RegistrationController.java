@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @GetMapping
     public String getRegistrationPage() {
-        return "registration.html";
+        return "registration";
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -36,7 +36,7 @@ public class RegistrationController {
     }
 
     @ExceptionHandler(LoginNotUniqueException.class)
-    public ResponseEntity<LoginNotUniqueException> handleRuntimeException(LoginNotUniqueException e, Map<String, Object> model) {
+    public ResponseEntity<LoginNotUniqueException> handleRuntimeException(LoginNotUniqueException e) {
         return ResponseEntity
                 .badRequest()
                 .body(e);
