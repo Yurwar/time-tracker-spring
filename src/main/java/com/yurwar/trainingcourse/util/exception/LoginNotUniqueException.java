@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.exception;
+package com.yurwar.trainingcourse.util.exception;
 
 public class LoginNotUniqueException extends RuntimeException {
     public LoginNotUniqueException() {

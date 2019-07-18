@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.controller;
+package com.yurwar.trainingcourse.util.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -14,4 +14,9 @@ public class PageController {
     public String getAccessDeniedPage() {
         return "/error/access-denied";
     }
+
+    @GetMapping("/test")
+    public String getTestPage() {
+        return "test";
+    }
 }

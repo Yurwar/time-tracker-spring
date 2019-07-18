@@ -2,20 +2,19 @@ package com.yurwar.trainingcourse.model;
 
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"activities", "activityRequests"})
 @Getter
+@Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"activities", "activityRequests"})
 @Entity
 @Table(name = "registered_users")
 public class User implements UserDetails {
@@ -44,14 +43,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "users_activities",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "activity_id"))
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Activity> activities;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<ActivityRequest> activity_requests;
+    private List<ActivityRequest> activityRequests;
 
 
     @Override

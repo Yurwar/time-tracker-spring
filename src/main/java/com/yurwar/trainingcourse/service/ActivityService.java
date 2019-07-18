@@ -1,13 +1,15 @@
 package com.yurwar.trainingcourse.service;
 
+import com.yurwar.trainingcourse.dto.ActivityDTO;
+import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
 import com.yurwar.trainingcourse.model.Activity;
-import com.yurwar.trainingcourse.model.ActivityImportance;
+import com.yurwar.trainingcourse.model.ActivityStatus;
+import com.yurwar.trainingcourse.model.User;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
-import com.yurwar.trainingcourse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -20,34 +22,42 @@ public class ActivityService {
     }
 
 
-    public List<Activity> findAll() {
+    public List<Activity> findAllActivities() {
         return activityRepository.findAll();
     }
 
-    public void save() {
+    public void addNewActivity(ActivityDTO activityDTO) {
         activityRepository.save(Activity.builder()
-                .name("Test activity #1")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
-                .finished(false)
+                .name(activityDTO.getName())
+                .description(activityDTO.getDescription())
+                .importance(activityDTO.getImportance())
+                .status(ActivityStatus.PENDING)
                 .build());
-        activityRepository.save(Activity.builder()
-                .name("Test activity #2")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
-                .finished(false)
-                .build());
-        activityRepository.save(Activity.builder()
-                .name("Test activity #3")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
-                .finished(false)
-                .build());
-        activityRepository.save(Activity.builder()
-                .name("Test activity #4")
-                .importance(ActivityImportance.EXTREMELY_HIGH)
-                .startTime(LocalDateTime.now())
-                .finished(false)
-                .build());
+    }
+
+    public Activity findActivityById(long activityId) {
+        return activityRepository.findById(activityId).orElseThrow(() ->
+                new IllegalArgumentException("Invalid activity id: " + activityId));
+    }
+
+    public void deleteActivity(Activity activity) {
+        User user = activity.getUser();
+        if (user != null) {
+            user.getActivities().remove(activity);
+        }
+        activityRepository.delete(activity);
+    }
+
+    public void markTimeSpent(long activityId, ActivityDurationDTO durationDTO) {
+        Activity activity = findActivityById(activityId);
+        Duration duration = activity.getDuration();
+
+        duration = duration.plusDays(durationDTO.getDays());
+        duration = duration.plusHours(durationDTO.getHours());
+        duration = duration.plusMinutes(durationDTO.getMinutes());
+
+        activity.setDuration(duration);
+
+        activityRepository.save(activity);
     }
 }

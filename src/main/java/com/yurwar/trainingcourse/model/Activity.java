@@ -1,12 +1,11 @@
 package com.yurwar.trainingcourse.model;
 
+import com.yurwar.trainingcourse.util.converter.DurationConverter;
 import com.yurwar.trainingcourse.util.converter.LocalDateTimeConverter;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -14,6 +13,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"activityRequests"})
+@ToString(exclude = {"activityRequests"})
 @Entity
 @Table(name = "activities")
 public class Activity {
@@ -24,10 +25,16 @@ public class Activity {
     @Column(nullable = false)
     private String name;
 
+    @Column(length = 500)
+    private String description;
+
     @Enumerated(value = EnumType.STRING)
     private ActivityImportance importance;
 
-    @Column(name = "start_time", nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private ActivityStatus status;
+
+    @Column(name = "start_time")
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime startTime;
 
@@ -35,9 +42,14 @@ public class Activity {
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime endTime;
 
-    @Column(nullable = false)
-    private boolean finished;
+    @Column(name = "duration")
+    @Convert(converter = DurationConverter.class)
+    private Duration duration;
 
-    @ManyToMany(mappedBy = "activities")
-    private Set<User> users;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "activity_id")
+    private User user;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+    private Set<ActivityRequest> activityRequests;
 }

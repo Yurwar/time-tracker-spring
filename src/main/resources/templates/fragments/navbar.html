@@ -20,8 +20,17 @@
             <li sec:authorize="isAuthenticated()" class="nav-item active">
                 <a class="nav-link" href="/users" th:text="#{link.all_users}"></a>
             </li>
-            <li sec:authorize="isAuthenticated()" class="nav-item active">
-                <a class="nav-link" href="/activities" th:text="#{link.all_activities}"></a>
+            <li sec:authorize="isAuthenticated()" class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Activities
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/activities">All activities</a>
+                    <a class="dropdown-item" href="/activities/add">Add activity</a>
+                    <a class="dropdown-item" href="/activities/request">All activity requests</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
             </li>
         </ul>
         <div class="form-inline my-2 my-lg-0" sec:authorize="!isAuthenticated()">
