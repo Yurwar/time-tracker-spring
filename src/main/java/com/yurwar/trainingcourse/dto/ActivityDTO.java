@@ -1,6 +1,6 @@
 package com.yurwar.trainingcourse.dto;
 
-import com.yurwar.trainingcourse.model.ActivityImportance;
+import com.yurwar.trainingcourse.entity.ActivityImportance;
 import lombok.*;
 
 @Getter

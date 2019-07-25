@@ -1,6 +1,6 @@
 package com.yurwar.trainingcourse.service;
 
-import com.yurwar.trainingcourse.model.*;
+import com.yurwar.trainingcourse.entity.*;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
 import com.yurwar.trainingcourse.repository.ActivityRequestRepository;
 import com.yurwar.trainingcourse.repository.UserRepository;

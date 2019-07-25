@@ -2,8 +2,8 @@ package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
-import com.yurwar.trainingcourse.model.Activity;
-import com.yurwar.trainingcourse.model.ActivityImportance;
+import com.yurwar.trainingcourse.entity.Activity;
+import com.yurwar.trainingcourse.entity.ActivityImportance;
 import com.yurwar.trainingcourse.service.ActivityService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.Valid;
 
 @Log4j2
 @Controller

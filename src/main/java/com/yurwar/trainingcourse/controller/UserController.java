@@ -1,11 +1,10 @@
 package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.model.Role;
-import com.yurwar.trainingcourse.model.User;
+import com.yurwar.trainingcourse.entity.Role;
+import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

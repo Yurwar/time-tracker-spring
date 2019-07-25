@@ -1,6 +1,6 @@
 package com.yurwar.trainingcourse.repository;
 
-import com.yurwar.trainingcourse.model.ActivityRequest;
+import com.yurwar.trainingcourse.entity.ActivityRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

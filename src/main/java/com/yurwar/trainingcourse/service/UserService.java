@@ -2,10 +2,8 @@ package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
 import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
-import com.yurwar.trainingcourse.model.Activity;
-import com.yurwar.trainingcourse.model.ActivityRequest;
-import com.yurwar.trainingcourse.model.Role;
-import com.yurwar.trainingcourse.model.User;
+import com.yurwar.trainingcourse.entity.Role;
+import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
 import com.yurwar.trainingcourse.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
@@ -18,11 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Log4j2
 @Service

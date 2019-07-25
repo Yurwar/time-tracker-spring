@@ -1,7 +1,7 @@
 package com.yurwar.trainingcourse.dto;
 
 
-import com.yurwar.trainingcourse.model.Role;
+import com.yurwar.trainingcourse.entity.Role;
 import lombok.*;
 
 import java.util.Set;

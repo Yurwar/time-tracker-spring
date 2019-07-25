@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.model;
+package com.yurwar.trainingcourse.entity;
 
 public enum ActivityImportance {
     LOW,

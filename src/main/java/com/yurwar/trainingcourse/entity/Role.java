@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.model;
+package com.yurwar.trainingcourse.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

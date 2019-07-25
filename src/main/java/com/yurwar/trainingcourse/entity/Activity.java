@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.model;
+package com.yurwar.trainingcourse.entity;
 
 import com.yurwar.trainingcourse.util.converter.DurationConverter;
 import com.yurwar.trainingcourse.util.converter.LocalDateTimeConverter;

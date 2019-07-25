@@ -1,8 +1,8 @@
 package com.yurwar.trainingcourse.controller;
 
-import com.yurwar.trainingcourse.model.ActivityRequest;
-import com.yurwar.trainingcourse.model.ActivityRequestAction;
-import com.yurwar.trainingcourse.model.User;
+import com.yurwar.trainingcourse.entity.ActivityRequest;
+import com.yurwar.trainingcourse.entity.ActivityRequestAction;
+import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.service.ActivityRequestService;
 import com.yurwar.trainingcourse.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

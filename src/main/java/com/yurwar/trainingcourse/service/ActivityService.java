@@ -2,9 +2,9 @@ package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
-import com.yurwar.trainingcourse.model.Activity;
-import com.yurwar.trainingcourse.model.ActivityStatus;
-import com.yurwar.trainingcourse.model.User;
+import com.yurwar.trainingcourse.entity.Activity;
+import com.yurwar.trainingcourse.entity.ActivityStatus;
+import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
