@@ -40,7 +40,7 @@ public class UserController {
 
         userService.deleteUser(userToDelete);
         model.addAttribute("users", userService.findAllUsers());
-        return "users";
+        return "redirect:/users";
     }
 
     @GetMapping("/users/update/{id}")
@@ -68,7 +68,7 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setAuthorities(userDTO.getAuthorities());
         userService.updateUser(user);
-        model.addAttribute("users", userService.findAllUsers());
-        return "users";
+
+        return "redirect:/users";
     }
 }

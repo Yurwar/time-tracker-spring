@@ -33,7 +33,6 @@ public class RegistrationController {
         return "registration";
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public String registerNewUser(Model model, @Valid RegistrationUserDTO registrationUserDTO) {
         log.info("{}", registrationUserDTO);
@@ -42,7 +41,7 @@ public class RegistrationController {
                 messageSource.getMessage("users.registration.success",
                         null,
                         LocaleContextHolder.getLocale()));
-        return "registration";
+        return "redirect:/login";
     }
 
     @ExceptionHandler(LoginNotUniqueException.class)

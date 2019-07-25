@@ -16,13 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ActivityRequestController {
     private final ActivityRequestService activityRequestService;
-    private final UserService userService;
-    private final ActivityController activityController;
 
-    public ActivityRequestController(ActivityRequestService activityRequestService, UserService userService, ActivityController activityController) {
+    public ActivityRequestController(ActivityRequestService activityRequestService) {
         this.activityRequestService = activityRequestService;
-        this.userService = userService;
-        this.activityController = activityController;
     }
 
     @GetMapping("/activities/request")
@@ -38,7 +34,7 @@ public class ActivityRequestController {
                                       @RequestParam String action,
                                       Model model) {
         activityRequestService.addActivityRequest(user.getId(), activityId, action);
-        return activityController.getActivitiesPage(model);
+        return "redirect:/activities";
     }
 
     @PostMapping("/activities/request/approve/{id}")
@@ -48,7 +44,7 @@ public class ActivityRequestController {
                 .findActivityRequestById(activityRequestId);
 
         if (activityRequest.getStatus() != null) {
-            return getActivityRequests(model);
+            return "redirect:/activities/request";
         }
 
         ActivityRequestAction action = activityRequest.getAction();
@@ -61,17 +57,17 @@ public class ActivityRequestController {
                 break;
         }
 
-        return getActivityRequests(model);
+        return "redirect:/activities/request";
     }
 
     @PostMapping("/activities/request/reject/{id}")
     public String rejectActivityRequest(@PathVariable("id") long activityRequestId,
                                         Model model) {
         if (activityRequestService.findActivityRequestById(activityRequestId).getStatus() != null) {
-            return getActivityRequests(model);
+            return "redirect:/activities/request";
         }
 
         activityRequestService.rejectActivityRequest(activityRequestId);
-        return getActivityRequests(model);
+        return "redirect:/activities/request";
     }
 }

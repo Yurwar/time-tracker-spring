@@ -43,7 +43,7 @@ public class ActivityController {
         activityService.addNewActivity(activityDTO);
         model.addAttribute("message", "Activity added success");
 
-        return getActivitiesPage(model);
+        return "redirect:/activities";
     }
 
     @PostMapping("/activities/delete/{id}")
@@ -52,7 +52,7 @@ public class ActivityController {
         Activity activity = activityService.findActivityById(activityId);
         activityService.deleteActivity(activity);
 
-        return getActivitiesPage(model);
+        return "redirect:/activities";
     }
 
     @PostMapping("/activities/mark-time/{id}")
@@ -63,6 +63,6 @@ public class ActivityController {
         log.info(durationDTO);
         activityService.markTimeSpent(activityId, durationDTO);
 
-        return getActivitiesPage(model);
+        return "redirect:/activities";
     }
 }
