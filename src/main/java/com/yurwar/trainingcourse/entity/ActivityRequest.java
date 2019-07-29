@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 @Table(name = "activity_requests")
 public class ActivityRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "activityRequestIdSeq", sequenceName = "activity_requests_id_seq", allocationSize = 0)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activityRequestIdSeq")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

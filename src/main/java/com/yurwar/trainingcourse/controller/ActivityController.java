@@ -4,9 +4,11 @@ import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
 import com.yurwar.trainingcourse.entity.Activity;
 import com.yurwar.trainingcourse.entity.ActivityImportance;
+import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.service.ActivityService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,12 +58,12 @@ public class ActivityController {
     }
 
     @PostMapping("/activities/mark-time/{id}")
-    public String markTimeSpent(@PathVariable("id") long activityId,
-                                ActivityDurationDTO durationDTO,
-                                Model model) {
+    public String markTimeSpent(@AuthenticationPrincipal User user,
+                                @PathVariable("id") long activityId,
+                                ActivityDurationDTO durationDTO) {
 
         log.info(durationDTO);
-        activityService.markTimeSpent(activityId, durationDTO);
+        activityService.markTimeSpent(activityId, user, durationDTO);
 
         return "redirect:/activities";
     }

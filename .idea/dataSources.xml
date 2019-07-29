@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="testdb@localhost" uuid="0171276e-f2f4-422c-ba99-f80e5573c8e9">
+    <data-source source="LOCAL" name="time_tracker_db_spring@localhost" uuid="6e6ae864-e5cd-47ea-8850-c04a0364d2db">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/testdb</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="time_tracker_db@localhost" uuid="bf7b4b77-2cee-4194-8f50-18707596731d">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db_spring</jdbc-url>
     </data-source>
   </component>
 </project>

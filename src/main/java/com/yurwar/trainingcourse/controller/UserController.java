@@ -4,6 +4,7 @@ import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
 import com.yurwar.trainingcourse.entity.Role;
 import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 @Controller
+@Log4j2
 @RequestMapping
 public class UserController {
     private final UserService userService;
@@ -37,9 +39,8 @@ public class UserController {
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable("id") long id, Model model) {
         User userToDelete = userService.findUserById(id);
+        userService.deleteUser(id);
 
-        userService.deleteUser(userToDelete);
-        model.addAttribute("users", userService.findAllUsers());
         return "redirect:/users";
     }
 
@@ -55,19 +56,13 @@ public class UserController {
     @PostMapping("/users/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              @Valid RegistrationUserDTO userDTO,
-                             BindingResult bindingResult,
-                             Model model) {
+                             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "update-user";
         }
-        User user = userService.findUserById(id);
 
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setAuthorities(userDTO.getAuthorities());
-        userService.updateUser(user);
+        log.info("Updated user info" + userDTO);
+        userService.updateUser(id, userDTO);
 
         return "redirect:/users";
     }

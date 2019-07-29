@@ -1,11 +1,11 @@
 package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
 import com.yurwar.trainingcourse.entity.Role;
 import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
 import com.yurwar.trainingcourse.repository.UserRepository;
+import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @Service
@@ -82,11 +83,22 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void deleteUser(User userToDelete) {
-        userRepository.delete(userToDelete);
+    public void deleteUser(long id) {
+        User user = findUserById(id);
+        userRepository.delete(user);
     }
 
-    public void updateUser(User user) {
+    public void updateUser(long id, RegistrationUserDTO userDTO) {
+        User user = findUserById(id);
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setUsername(userDTO.getUsername());
+        if (Objects.nonNull(userDTO.getPassword())) {
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+        user.setAuthorities(userDTO.getAuthorities());
+
         userRepository.save(user);
     }
 

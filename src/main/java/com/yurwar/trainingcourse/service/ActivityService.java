@@ -6,13 +6,16 @@ import com.yurwar.trainingcourse.entity.Activity;
 import com.yurwar.trainingcourse.entity.ActivityStatus;
 import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 
 @Service
+@Log4j2
 public class ActivityService {
     private final ActivityRepository activityRepository;
 
@@ -42,24 +45,29 @@ public class ActivityService {
     }
 
     public void deleteActivity(Activity activity) {
-        User user = activity.getUser();
-        if (user != null) {
+        Set<User> users = activity.getUsers();
+        for (User user : users) {
             user.getActivities().remove(activity);
         }
         activityRepository.delete(activity);
     }
 
-    //TODO add user check
-    public void markTimeSpent(long activityId, ActivityDurationDTO durationDTO) {
+    public void markTimeSpent(long activityId, User user, ActivityDurationDTO durationDTO) {
         Activity activity = findActivityById(activityId);
-        Duration duration = activity.getDuration();
+        log.info("Try to mark time spent to activity: " + activity + " with duration: " + durationDTO);
 
-        duration = duration.plusDays(durationDTO.getDays());
-        duration = duration.plusHours(durationDTO.getHours());
-        duration = duration.plusMinutes(durationDTO.getMinutes());
+        if (activity.getStatus().equals(ActivityStatus.ACTIVE) && activity.getUsers().contains(user)) {
+            log.info("Marking time spent");
+            Duration duration = activity.getDuration();
 
-        activity.setDuration(duration);
+            duration = duration
+                    .plusDays(durationDTO.getDays())
+                    .plusHours(durationDTO.getHours())
+                    .plusMinutes(durationDTO.getMinutes());
 
-        activityRepository.save(activity);
+            activity.setDuration(duration);
+
+            activityRepository.save(activity);
+        }
     }
 }
