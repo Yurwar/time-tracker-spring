@@ -8,6 +8,7 @@ import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -26,7 +27,7 @@ public class ActivityService {
 
 
     public List<Activity> findAllActivities() {
-        return activityRepository.findAll();
+        return activityRepository.findAll(Sort.by("id"));
     }
 
     public void addNewActivity(ActivityDTO activityDTO) {
