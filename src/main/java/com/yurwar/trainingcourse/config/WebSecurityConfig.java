@@ -38,25 +38,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/js/**", "/css/**", "/index", "/access-denied")
+                    .antMatchers("/js/**", "/images/**", "/css/**", "/index", "/", "/access-denied", "/favicon.ico", "/error/**")
                     .permitAll()
-                    .antMatchers("/users/**", "/api/user")
+                    .antMatchers("/users/**", "/activities", "/activities/request", "/activities/add", "/activities/delete/**", "/activities/request/approve/**", "/activities/request/reject/**")
                     .hasAuthority("ADMIN")
-                    .antMatchers("/registration")
+                    .antMatchers("/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**")
+                    .hasAnyAuthority("ADMIN", "USER")
+                    .antMatchers("/registration", "/login")
                     .anonymous()
+                    .anyRequest()
+                    .denyAll()
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .failureUrl("/login?error")
                     .usernameParameter("username")
-                    .permitAll()
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
-                    .permitAll()
                 .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler);
+                    .exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler);
     }
 }
