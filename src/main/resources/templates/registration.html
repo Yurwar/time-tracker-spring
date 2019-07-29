@@ -9,59 +9,61 @@
 </head>
 <body>
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
+
 <div class="container">
-    <div class="card">
-        <div class="card-header" th:text="#{registration.header}"></div>
-        <div class="card-body">
-            <form th:action="@{/registration}" method="post">
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label id="firstNameLabel" for="firstName" th:text="#{registration.first_name.label}"></label>
-                        <input type="text"
-                               name="firstName"
-                               id="firstName"
-                               th:placeholder="#{registration.first_name.placeholder}"
-                               class="form-control"
-                               required
-                        />
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="lastName" th:text="#{registration.last_name.label}"></label>
-                        <input type="text"
-                               name="lastName"
-                               id="lastName"
-                               th:placeholder="#{registration.last_name.placeholder}"
-                               class="form-control"
-                               required
-                        />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label id="usernameLabel" for="username" th:text="#{registration.username.label}"></label>
-                        <input type="text"
-                               name="username"
-                               id="username"
-                               th:placeholder="#{registration.username.placeholder}"
-                               class="form-control"
-                               required
-                        />
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="password" th:text="#{registration.password.label}"></label>
-                        <input type="password"
-                               name="password"
-                               id="password"
-                               th:placeholder="#{registration.password.placeholder}"
-                               class="form-control"
-                               required
-                        />
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" th:text="#{button.signup}">Sign up</button>
-            </form>
+    <div class="display-4" th:text="#{registration.header}"></div>
+    <hr>
+    <form th:action="@{/registration}" method="post">
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label>
+                    <span th:text="#{registration.first_name.label}"></span>
+                    <input type="text"
+                           name="firstName"
+                           th:placeholder="#{registration.first_name.placeholder}"
+                           class="form-control"
+                           required/>
+                </label>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label>
+                    <span th:text="#{registration.last_name.label}"></span>
+                    <input type="text"
+                           name="lastName"
+                           th:placeholder="#{registration.last_name.placeholder}"
+                           class="form-control"
+                           required
+                    />
+                </label>
+            </div>
         </div>
-        <div id="resultMessage" class="card-footer" th:text="${resultMessage}"></div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label>
+                    <span th:text="#{registration.username.label}"></span>
+                    <input type="text"
+                           name="username"
+                           th:placeholder="#{registration.username.placeholder}"
+                           class="form-control"
+                           required/>
+                </label>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label>
+                    <span th:text="#{registration.password.label}"></span>
+                    <input type="password"
+                           name="password"
+                           th:placeholder="#{registration.password.placeholder}"
+                           class="form-control"
+                           required
+                    />
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{button.signup}">Sign up</button>
+    </form>
+    <div>
+        <span class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}"></span>
     </div>
 </div>
 

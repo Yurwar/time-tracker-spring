@@ -28,24 +28,32 @@
                     <p><span>Importance: </span><span th:text="${activity.importance}"></span></p>
                     <p><span>Start time: </span><span th:text="${#temporals.format(activity.startTime, 'dd.MM.yyyy HH:mm')}"></span></p>
                     <p><span>End time: </span><span th:text="${#temporals.format(activity.endTime, 'dd.MM.yyyy HH:mm')}"></span></p>
-                    <p><span>Duration: </span><span th:text="${activity.duration?.toMinutes()}"></span></p>
-                    <p>Users: <span th:each="user : ${activity.users}">
-                        <span th:text="${user.username}"></span>
-                    </span></p>
+                    <p>
+                        <span>Duration: </span>
+                        <span th:text="${activity.duration?.toDaysPart()}"></span>
+                        <span>days</span>
+                        <span th:text="${activity.duration?.toHoursPart()}"></span>
+                        <span>hours</span>
+                        <span th:text="${activity.duration?.toMinutesPart()}"></span>
+                        <span>minutes</span>
+                    </p>
+                    <p>Users:
+                        <span th:each="user : ${activity.users}">
+                        <span th:text="${user.username}"></span><span>;</span>
+                    </span>
+                    </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <form th:action="@{/activities/edit/{id}(id=${activity.id})}" method="post">
+                            <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/activities/edit/{id}(id=${activity.id})}" method="post">
                                 <button type="submit" class="btn btn-sm btn-secondary">Edit</button>
                             </form>
-                            <form th:action="@{/activities/delete/{id}(id=${activity.id})}" method="post">
+                            <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/activities/delete/{id}(id=${activity.id})}" method="post">
                                 <button type="submit" class="btn btn-sm btn-secondary">Delete</button>
                             </form>
                             <form th:action="@{/activities/request/add/{id}(id=${activity.id})}" method="post">
-                                <input hidden name="action" th:value="ADD" />
                                 <button type="submit" class="btn btn-sm btn-secondary">Request to add</button>
                             </form>
                             <form th:action="@{/activities/request/complete/{id}(id=${activity.id})}" method="post">
-                                <input hidden name="action" th:value="REMOVE" />
                                 <button type="submit" class="btn btn-sm btn-secondary">Request to complete</button>
                             </form>
                             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#timeSpentModal" th:attrappend="data-target=${activity.id}">
