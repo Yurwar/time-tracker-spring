@@ -48,11 +48,11 @@
                                 <input hidden name="action" th:value="REMOVE" />
                                 <button type="submit" class="btn btn-sm btn-secondary">Request to complete</button>
                             </form>
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#timeSpentModal">
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#timeSpentModal" th:attrappend="data-target=${activity.id}">
                                 Mark time spent
                             </button>
 
-                            <div class="modal fade" id="timeSpentModal" tabindex="-1" role="dialog" aria-labelledby="timeSpentModalTitle" aria-hidden="true">
+                            <div class="modal fade" th:attrappend="id=${activity.id}" id="timeSpentModal" tabindex="-1" role="dialog" aria-labelledby="timeSpentModalTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
