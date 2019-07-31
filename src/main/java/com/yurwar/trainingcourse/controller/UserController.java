@@ -4,6 +4,7 @@ import com.yurwar.trainingcourse.dto.UpdateUserDTO;
 import com.yurwar.trainingcourse.entity.Authority;
 import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.service.UserService;
+import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,8 +59,13 @@ public class UserController {
         }
 
         log.info("Updated user info" + userDTO);
-        //TODO check on username unique
-        userService.updateUser(id, userDTO);
+        try {
+            userService.updateUser(id, userDTO);
+        } catch (LoginNotUniqueException e) {
+            model.addAttribute("usernameErrorMessage", e.getMessage());
+            model.addAttribute("authorities", Authority.values());
+            return "update-user";
+        }
 
         return "redirect:/users";
     }

@@ -55,7 +55,7 @@ public class RegistrationController {
     public String handleRuntimeException(LoginNotUniqueException e,
                                          Model model) {
         model.addAttribute("user", new RegistrationUserDTO());
-        model.addAttribute("loginErrorMessage", e.getMessage());
+        model.addAttribute("usernameErrorMessage", e.getMessage());
         return "registration";
     }
 }

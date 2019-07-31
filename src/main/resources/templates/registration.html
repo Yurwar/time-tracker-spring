@@ -49,7 +49,7 @@
                            class="form-control"
                            required/>
                     <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
-                    <span th:if="${loginErrorMessage}" th:text="${loginErrorMessage}" class="text-danger"></span>
+                    <span th:if="${usernameErrorMessage}" th:text="${usernameErrorMessage}" class="text-danger"></span>
                 </label>
             </div>
             <div class="col-md-3 mb-3">

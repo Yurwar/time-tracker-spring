@@ -99,7 +99,15 @@ public class UserService implements UserDetailsService {
         }
         user.setAuthorities(userDTO.getAuthorities());
 
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Login not unique: " + userDTO.getUsername());
+            throw new LoginNotUniqueException(messageSource.getMessage(
+                    "users.registration.login.not_unique",
+                    null,
+                    LocaleContextHolder.getLocale()) + userDTO.getUsername(), e);
+        }
     }
 
 }
