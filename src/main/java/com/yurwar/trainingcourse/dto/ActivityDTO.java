@@ -13,11 +13,11 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @ToString
 public class ActivityDTO {
-    //TODO i18n
-    @NotBlank(message = "Activity name must be not blank")
-    @Size(min = 5, message = "Minimal size of activity name must be more than 5")
+    @NotBlank(message = "{validation.activity.name.not_blank}")
+    @Size(min = 5, max = 100, message = "{validation.activity.name.size}")
     private String name;
+    @Size(max = 500, message = "{validation.activity.description.size}")
     private String description;
-    @NotNull(message = "Activity importance must be not empty")
+    @NotNull(message = "{validation.activity.importance.not_null}")
     private ActivityImportance importance;
 }

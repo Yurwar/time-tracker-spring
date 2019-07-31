@@ -58,6 +58,7 @@ public class UserController {
         }
 
         log.info("Updated user info" + userDTO);
+        //TODO check on username unique
         userService.updateUser(id, userDTO);
 
         return "redirect:/users";

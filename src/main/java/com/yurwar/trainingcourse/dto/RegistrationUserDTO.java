@@ -12,20 +12,19 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @ToString
 public class RegistrationUserDTO {
-    //TODO i18n
-    @NotBlank(message = "First name must be not blank")
-    @Size(min = 2, message = "Minimal length of first name must be more than 2")
+    @NotBlank(message = "{validation.user.first_name.not_blank}")
+    @Size(min = 2, max = 50, message = "{validation.user.first_name.size}")
     private String firstName;
 
-    @NotBlank(message = "Last name must be not blank")
-    @Size(min = 2, message = "Minimal length of last name must be more than 2")
+    @NotBlank(message = "{validation.user.last_name.not_blank}")
+    @Size(min = 2, max = 50, message = "{validation.user.last_name.size}")
     private String lastName;
 
-    @NotBlank(message = "Username must be not blank")
-    @Size(min = 5, message = "Minimal length of first name must be more than 6")
+    @NotBlank(message = "{validation.user.username.not_blank}")
+    @Size(min = 5, max = 39, message = "{validation.user.username.size}")
     private String username;
 
-    @NotBlank(message = "Password must be not blank")
-    @Size(min = 2, message = "Minimal length of password must be more than 2")
+    @NotBlank(message = "{validation.user.password.not_blank}")
+    @Size(min = 5, max = 39, message = "{validation.user.password.size}")
     private String password;
 }

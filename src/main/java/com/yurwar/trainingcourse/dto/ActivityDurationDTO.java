@@ -7,16 +7,15 @@ import javax.validation.constraints.PositiveOrZero;
 
 @Data
 public class ActivityDurationDTO {
-    //TODO i18n
-    @PositiveOrZero(message = "Amount of days must be positive or zero")
-    @NotNull(message = "Amount of days must be positive or zero")
+    @PositiveOrZero(message = "{validation.activity.duration.days.positive_or_zero}")
+    @NotNull(message = "{validation.activity.duration.days.not_null}")
     private Integer days;
 
-    @PositiveOrZero(message = "Amount of hours must be positive or zero")
-    @NotNull(message = "Amount of hours must be positive or zero")
+    @PositiveOrZero(message = "{validation.activity.duration.hours.positive_or_zero}")
+    @NotNull(message = "{validation.activity.duration.hours.not_null}")
     private Integer hours;
 
-    @PositiveOrZero(message = "Amount of minutes must be positive or zero")
-    @NotNull(message = "Amount of hours must be positive or zero")
+    @PositiveOrZero(message = "{validation.activity.duration.minutes.positive_or_zero}")
+    @NotNull(message = "{validation.activity.duration.minutes.not_null}")
     private Integer minutes;
 }

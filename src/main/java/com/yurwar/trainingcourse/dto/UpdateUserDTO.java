@@ -9,23 +9,22 @@ import java.util.Set;
 
 @Data
 public class UpdateUserDTO {
-    //TODO i18n
     private long id;
 
-    @NotBlank(message = "First name must not be blank")
-    @Size(min = 2, max = 255, message = "First name size must be from 2 to 255")
+    @NotBlank(message = "{validation.user.first_name.not_blank}")
+    @Size(min = 2, max = 50, message = "{validation.user.first_name.size}")
     private String firstName;
 
-    @NotBlank(message = "Last name must not be blank")
-    @Size(min = 2, max = 255, message = "Last name size must be from 2 to 255")
+    @NotBlank(message = "{validation.user.last_name.not_blank}")
+    @Size(min = 2, max = 50, message = "{validation.user.last_name.size}")
     private String lastName;
 
-    @NotBlank(message = "Username must not be blank")
-    @Size(min = 5, max = 255, message = "Username size must be from 5 to 255")
+    @NotBlank(message = "{validation.user.username.not_blank}")
+    @Size(min = 5, max = 39, message = "{validation.user.username.size}")
     private String username;
 
     private String password;
 
-    @Size(min = 1, max = 2, message = "Must be at least one authority")
+    @Size(min = 1, message = "{validation.user.authorities.size}")
     private Set<Authority> authorities;
 }
