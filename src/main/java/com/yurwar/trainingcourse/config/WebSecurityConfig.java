@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .antMatchers("/users/**", "/activities/request", "/activities/add", "/activities/delete/**", "/activities/edit/**", "/activities/request/approve/**", "/activities/request/reject/**")
                     .hasAuthority("ADMIN")
-                    .antMatchers("/activities","/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**")
+                    .antMatchers("/profile", "/activities","/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**")
                     .hasAnyAuthority("ADMIN", "USER")
                     .antMatchers("/registration", "/login")
                     .anonymous()

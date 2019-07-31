@@ -6,6 +6,7 @@ import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,5 +61,12 @@ public class UserController {
         userService.updateUser(id, userDTO);
 
         return "redirect:/users";
+    }
+
+    @GetMapping("/profile")
+    public String getUserProfilePage(@AuthenticationPrincipal User user,
+                                     Model model) {
+        model.addAttribute("user", userService.findUserById(user.getId()));
+        return "user-profile";
     }
 }

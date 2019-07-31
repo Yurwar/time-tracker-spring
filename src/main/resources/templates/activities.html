@@ -44,9 +44,6 @@
                     </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/activities/edit/{id}(id=${activity.id})}" method="post">
-                                <button type="submit" class="btn btn-sm btn-secondary">Edit</button>
-                            </form>
                             <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/activities/delete/{id}(id=${activity.id})}" method="post">
                                 <button type="submit" class="btn btn-sm btn-secondary">Delete</button>
                             </form>

@@ -17,6 +17,9 @@
             <li class="nav-item active">
                 <a class="nav-link" th:href="@{/index}" th:text="#{link.home}"></a>
             </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item active">
+                <a class="nav-link" th:href="@{/profile}" th:text="#{link.profile}"></a>
+            </li>
             <li sec:authorize="hasAuthority('ADMIN')" class="nav-item active">
                 <a class="nav-link" th:href="@{/users}" th:text="#{link.all_users}"></a>
             </li>

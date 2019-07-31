@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "activity_id")

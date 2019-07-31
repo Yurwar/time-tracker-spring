@@ -21,6 +21,7 @@ public class Activity {
     @Id
     @SequenceGenerator(name = "activityIdSeq", sequenceName = "activities_id_seq", allocationSize = 0)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activityIdSeq")
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
