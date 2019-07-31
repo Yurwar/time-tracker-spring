@@ -69,22 +69,25 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form th:action="@{/activities/mark-time/{id}(id=${activity.id})}" method="post">
+                                        <form th:action="@{/activities/mark-time/{id}(id=${activity.id})}" th:object="${duration}" method="post">
                                             <div class="modal-body">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Days</span>
                                                     </div>
-                                                    <input name="days" type="number" class="form-control" aria-label="days">
+                                                    <input th:field="*{days}" type="number" class="form-control" aria-label="days">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Hours</span>
                                                     </div>
-                                                    <input name="hours" type="number" class="form-control" aria-label="hours">
+                                                    <input th:field="*{hours}" type="number" class="form-control" aria-label="hours">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Minutes</span>
                                                     </div>
-                                                    <input name="minutes" type="number" class="form-control" aria-label="minutes">
+                                                    <input th:field="*{minutes}" type="number" class="form-control" aria-label="minutes">
                                                 </div>
+                                                <p th:if="${#fields.hasErrors('days')}" th:errors="*{days}" class="text-danger"></p>
+                                                <p th:if="${#fields.hasErrors('hours')}" th:errors="*{hours}" class="text-danger"></p>
+                                                <p th:if="${#fields.hasErrors('minutes')}" th:errors="*{minutes}" class="text-danger"></p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

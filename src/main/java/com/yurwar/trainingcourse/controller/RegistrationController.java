@@ -9,10 +9,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -31,13 +29,20 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String getRegistrationPage() {
+    public String getRegistrationPage(@ModelAttribute("user") RegistrationUserDTO registrationUserDTO) {
         return "registration";
     }
 
     @PostMapping
-    public String registerNewUser(Model model, @Valid RegistrationUserDTO registrationUserDTO) {
+    public String registerNewUser(Model model,
+                                  @ModelAttribute("user") @Valid RegistrationUserDTO registrationUserDTO,
+                                  BindingResult bindingResult) {
         log.info("{}", registrationUserDTO);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
         userService.saveUser(registrationUserDTO);
         model.addAttribute("resultMessage",
                 messageSource.getMessage("users.registration.success",

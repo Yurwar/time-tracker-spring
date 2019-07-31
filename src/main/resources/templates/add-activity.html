@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
     <meta charset="UTF-8">
     <title>Add new activity</title>
@@ -24,7 +24,7 @@
                     <div class="form-group col-md-12">
                         <label for="description" class="col-form-label">Activity description</label>
                         <textarea id="description" th:field="*{description}" placeholder="Description" rows="4" class="form-control"></textarea>
-                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{description}" class="text-danger"></span>
+                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="importanceLevel" class="col-form-label">Activity importance</label>
@@ -34,16 +34,12 @@
                                     th:value="${importance}">
                             </option>
                         </select>
+                        <span th:if="${#fields.hasErrors('importance')}" th:errors="*{importance}" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mt-5">
                         <input type="submit" class="btn btn-primary" value="Add activity">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mt-5">
-                        <h5 class="text-success" th:text="${message}"></h5>
                     </div>
                 </div>
             </form>

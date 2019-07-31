@@ -1,7 +1,8 @@
 package com.yurwar.trainingcourse.service;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.entity.Role;
+import com.yurwar.trainingcourse.dto.UpdateUserDTO;
+import com.yurwar.trainingcourse.entity.Authority;
 import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.repository.ActivityRepository;
 import com.yurwar.trainingcourse.repository.UserRepository;
@@ -70,8 +71,7 @@ public class UserService implements UserDetailsService {
                     .username(userDTO.getUsername())
                     .password(passwordEncoder.encode(userDTO.getPassword()))
                     .enabled(true)
-                    //Temp usage of one hardcode role
-                    .authorities(Collections.singleton(Role.USER))
+                    .authorities(Collections.singleton(Authority.USER))
                     .build();
             userRepository.save(user);
             log.info("New user " + user);
@@ -85,17 +85,16 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(long id) {
-        User user = findUserById(id);
-        userRepository.delete(user);
+        userRepository.deleteById(id);
     }
 
-    public void updateUser(long id, RegistrationUserDTO userDTO) {
+    public void updateUser(long id, UpdateUserDTO userDTO) {
         User user = findUserById(id);
 
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setUsername(userDTO.getUsername());
-        if (Objects.nonNull(userDTO.getPassword())) {
+        if (Objects.nonNull(userDTO.getPassword()) && userDTO.getPassword().length() > 0) {
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         }
         user.setAuthorities(userDTO.getAuthorities());

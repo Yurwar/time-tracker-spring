@@ -2,7 +2,7 @@ package com.yurwar.trainingcourse.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
+public enum Authority implements GrantedAuthority {
     USER,
     ADMIN;
 

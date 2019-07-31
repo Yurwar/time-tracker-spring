@@ -11,9 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Log4j2
 @Controller
@@ -32,18 +36,24 @@ public class ActivityController {
     }
 
     @GetMapping("/activities/add")
-    public String getAddActivityPage(Model model) {
-        model.addAttribute("activity", new ActivityDTO());
+    public String getAddActivityPage(Model model,
+                                     @ModelAttribute("activity") ActivityDTO activityDTO) {
         model.addAttribute("importanceLevels", ActivityImportance.values());
         return "add-activity";
     }
 
     @PostMapping("/activities/add")
-    public String addActivity(ActivityDTO activityDTO,
+    public String addActivity(@ModelAttribute("activity") @Valid ActivityDTO activityDTO,
+                              BindingResult bindingResult,
                               Model model) {
         log.info(activityDTO);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("importanceLevels", ActivityImportance.values());
+            return "add-activity";
+        }
+
         activityService.addNewActivity(activityDTO);
-        model.addAttribute("message", "Activity added success");
 
         return "redirect:/activities";
     }
@@ -57,12 +67,24 @@ public class ActivityController {
         return "redirect:/activities";
     }
 
+    @ModelAttribute("duration")
+    public ActivityDurationDTO getActivityDurationDTO() {
+        return new ActivityDurationDTO();
+    }
+
     @PostMapping("/activities/mark-time/{id}")
     public String markTimeSpent(@AuthenticationPrincipal User user,
                                 @PathVariable("id") long activityId,
-                                ActivityDurationDTO durationDTO) {
-
+                                @ModelAttribute("duration") @Valid ActivityDurationDTO durationDTO,
+                                BindingResult bindingResult,
+                                Model model) {
         log.info(durationDTO);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("activities", activityService.findAllActivities());
+            return "activities";
+        }
+
         activityService.markTimeSpent(activityId, user, durationDTO);
 
         return "redirect:/activities";

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
     <meta charset="UTF-8">
     <title>Registration form</title>
@@ -13,27 +13,29 @@
 <div class="container">
     <div class="display-4" th:text="#{registration.header}"></div>
     <hr>
-    <form th:action="@{/registration}" method="post">
+    <form th:action="@{/registration}" th:object="${user}" method="post">
         <div class="form-row">
             <div class="col-md-3 mb-3">
                 <label>
                     <span th:text="#{registration.first_name.label}"></span>
                     <input type="text"
-                           name="firstName"
+                           th:field="*{firstName}"
                            th:placeholder="#{registration.first_name.placeholder}"
                            class="form-control"
                            required/>
+                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
                 </label>
             </div>
             <div class="col-md-3 mb-3">
                 <label>
                     <span th:text="#{registration.last_name.label}"></span>
                     <input type="text"
-                           name="lastName"
+                           th:field="*{lastName}"
                            th:placeholder="#{registration.last_name.placeholder}"
                            class="form-control"
                            required
                     />
+                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></span>
                 </label>
             </div>
         </div>
@@ -42,21 +44,23 @@
                 <label>
                     <span th:text="#{registration.username.label}"></span>
                     <input type="text"
-                           name="username"
+                           th:field="*{username}"
                            th:placeholder="#{registration.username.placeholder}"
                            class="form-control"
                            required/>
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
                 </label>
             </div>
             <div class="col-md-3 mb-3">
                 <label>
                     <span th:text="#{registration.password.label}"></span>
                     <input type="password"
-                           name="password"
+                           th:field="*{password}"
                            th:placeholder="#{registration.password.placeholder}"
                            class="form-control"
                            required
                     />
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
                 </label>
             </div>
         </div>
