@@ -49,6 +49,7 @@
                            class="form-control"
                            required/>
                     <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
+                    <span th:if="${loginErrorMessage}" th:text="${loginErrorMessage}" class="text-danger"></span>
                 </label>
             </div>
             <div class="col-md-3 mb-3">
@@ -66,9 +67,6 @@
         </div>
         <button type="submit" class="btn btn-primary" th:text="#{button.signup}">Sign up</button>
     </form>
-    <div>
-        <span class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}"></span>
-    </div>
 </div>
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
