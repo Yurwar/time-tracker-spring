@@ -15,31 +15,38 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h1 class="display-4">Welcome, <span th:text="${user.firstName}"></span></h1>
+            <h1 class="display-4">
+                <span th:text="#{users.profile.welcome}"></span>
+                <span th:text="${user.firstName}"></span>
+            </h1>
             <hr>
         </div>
         <div class="card-body">
             <div class="card-text">
-                <span>First name: </span><span th:text="${user.firstName}"></span>
+                <span th:text="#{users.profile.first_name}">First name: </span>
+                <span th:text="${user.firstName}"></span>
             </div>
             <hr>
             <div class="card-text">
-                <span>Last name: </span><span th:text="${user.lastName}"></span>
+                <span th:text="#{users.profile.last_name}">Last name: </span>
+                <span th:text="${user.lastName}"></span>
             </div>
             <hr>
             <div class="card-text">
-                <span>Username: </span><span th:text="${user.username}"></span>
+                <span th:text="#{users.profile.username}">Username: </span>
+                <span th:text="${user.username}"></span>
             </div>
             <hr>
             <div class="card-text">
-                <span th:if="${user.activities.isEmpty()}">You haven't any activities</span>
-                <table th:unless="${user.activities.isEmpty()}" style="caption-side: top"
+                <span th:if="${user.activities.isEmpty()}" th:text="#{users.profile.activities.empty}">You haven't any activities</span>
+                <table th:unless="${user.activities.isEmpty()}"
                        class="table table-sm table-bordered table-striped">
-                    <caption style="caption-side: top">Your activities</caption>
+                    <caption style="caption-side: top" th:text="#{users.profile.activities.caption}">Your activities
+                    </caption>
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Status</th>
+                        <th th:text="#{users.profile.activities.name}">Name</th>
+                        <th th:text="#{users.profile.activities.status}">Status</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,15 +58,17 @@
                 </table>
             </div>
             <div class="card-text">
-                <span th:if="${user.activityRequests.isEmpty()}">You haven't any activity requests</span>
+                <span th:if="${user.activityRequests.isEmpty()}" th:text="#{users.profile.activity.requests.empty}">You haven't any activity requests</span>
                 <table th:unless="${user.activityRequests.isEmpty()}"
                        class="table table-sm table-bordered table-striped">
-                    <caption style="caption-side: top">Your activity requests</caption>
+                    <caption style="caption-side: top" th:text="#{users.profile.activity.requests.caption}">Your
+                        activity requests
+                    </caption>
                     <thead>
                     <tr>
-                        <th>Activity name</th>
-                        <th>Action</th>
-                        <th>Status</th>
+                        <th th:text="#{users.profile.activity.requests.activity_name}">Activity name</th>
+                        <th th:text="#{users.profile.activity.requests.action}">Action</th>
+                        <th th:text="#{users.profile.activity.requests.status}">Status</th>
                     </tr>
                     </thead>
                     <tbody>

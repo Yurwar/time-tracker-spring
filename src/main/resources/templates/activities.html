@@ -15,16 +15,16 @@
     <div class="card">
         <div class="card-header">
             <div th:if="${activityPage.isEmpty()}">
-                <h1 class="display-4"> No activities available </h1>
+                <h1 class="display-4" th:text="#{activities.empty}"> No activities available </h1>
                 <hr>
             </div>
-            <h1 class="display-4">Activities</h1>
+            <h1 class="display-4" th:text="#{activities.title}">Activities</h1>
             <hr>
             <div th:replace="~{/fragments/pagination.html::page-navigation(url='/activities',page=${activityPage})}"></div>
         </div>
         <div class="card-body">
             <div th:unless="${activityPage.isEmpty()}" class="row">
-                <div th:each="activity : ${activityPage}" class="col-md-4">
+                <div class="col-md-6" th:each="activity : ${activityPage}">
                     <div class="card mb-3 shadow-sm">
                         <div class="card-header">
                             <p><span th:text="${activity.name}"></span></p>
@@ -33,99 +33,148 @@
                             <p><span th:text="${activity.description}"></span></p>
                         </div>
                         <div class="card-footer">
-                            <p><span>Id: </span><span th:text="${activity.id}"></span></p>
-                            <p><span>Importance: </span><span th:text="${activity.importance}"></span></p>
-                            <p><span>Start time: </span><span
-                                    th:text="${#temporals.format(activity.startTime, 'dd.MM.yyyy HH:mm')}"></span></p>
-                            <p><span>End time: </span><span
-                                    th:text="${#temporals.format(activity.endTime, 'dd.MM.yyyy HH:mm')}"></span></p>
                             <p>
-                                <span>Duration: </span>
-                                <span th:text="${activity.duration?.toDaysPart()}"></span>
-                                <span>days</span>
-                                <span th:text="${activity.duration?.toHoursPart()}"></span>
-                                <span>hours</span>
-                                <span th:text="${activity.duration?.toMinutesPart()}"></span>
-                                <span>minutes</span>
+                                <span th:text="#{activities.activity.id}">Id: </span>
+                                <span th:text="${activity.id}"></span>
                             </p>
-                            <p>Users:
+                            <p>
+                                <span th:text="#{activities.activity.importance}">Importance: </span>
+                                <span th:text="${activity.importance}"></span>
+                            </p>
+                            <p>
+                                <span th:text="#{activities.activity.start_time}">Start time: </span>
+                                <span th:text="${#temporals.format(activity.startTime, 'dd.MM.yyyy HH:mm')}"></span>
+                            </p>
+                            <p>
+                                <span th:text="#{activities.activity.end_time}">End time: </span>
+                                <span th:text="${#temporals.format(activity.endTime, 'dd.MM.yyyy HH:mm')}"></span>
+                            </p>
+                            <p>
+                                <span th:text="#{activities.activity.duration}">Duration: </span>
+                                <span th:text="${activity.duration?.toDaysPart()}"></span>
+                                <span th:text="#{activities.activity.duration.days}">days</span>
+                                <span th:text="${activity.duration?.toHoursPart()}"></span>
+                                <span th:text="#{activities.activity.duration.hours}">hours</span>
+                                <span th:text="${activity.duration?.toMinutesPart()}"></span>
+                                <span th:text="#{activities.activity.duration.minutes}">minutes</span>
+                            </p>
+                            <p th:text="#{activities.activity.users}">Users:
                                 <span th:each="user : ${activity.users}">
-                        <span th:text="${user.username}"></span><span>;</span>
-                    </span>
+                                    <span th:text="${user.username}"></span>
+                                    <span>;</span>
+                                </span>
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <form sec:authorize="hasAuthority('ADMIN')"
-                                          th:action="@{/activities/delete/{id}(id=${activity.id})}" method="post">
-                                        <button type="submit" class="btn btn-sm btn-secondary">Delete</button>
-                                    </form>
-                                    <form th:action="@{/activities/request/add/{id}(id=${activity.id})}" method="post">
-                                        <button type="submit" class="btn btn-sm btn-secondary">Request to add</button>
-                                    </form>
-                                    <form th:action="@{/activities/request/complete/{id}(id=${activity.id})}"
-                                          method="post">
-                                        <button type="submit" class="btn btn-sm btn-secondary">Request to complete
-                                        </button>
-                                    </form>
+                                <div aria-label="Basic example" class="btn-group" role="group">
+                                    <!--                                    <form sec:authorize="hasAuthority('ADMIN')"-->
+                                    <!--                                          th:action="@{/activities/delete/{id}(id=${activity.id})}" method="post">-->
+                                    <!--                                        <button type="submit" class="btn btn-sm btn-secondary">-->
+                                    <!--                                            Delete-->
+                                    <!--                                        </button>-->
+                                    <!--                                    </form>-->
+                                    <!--                                    <form th:action="@{/activities/request/add/{id}(id=${activity.id})}" method="post">-->
+                                    <!--                                        <button type="submit" class="btn btn-sm btn-secondary">-->
+                                    <!--                                            Request to add-->
+                                    <!--                                        </button>-->
+                                    <!--                                    </form>-->
+                                    <!--                                    <form th:action="@{/activities/request/complete/{id}(id=${activity.id})}"-->
+                                    <!--                                          method="post">-->
+                                    <!--                                        <button type="submit" class="btn btn-sm btn-secondary">-->
+                                    <!--                                            Request to complete-->
+                                    <!--                                        </button>-->
+                                    <!--                                    </form>-->
+                                    <a class="btn btn-sm btn-secondary"
+                                       sec:authorize="hasAuthority('ADMIN')"
+                                       th:href="@{/activities/delete/{id}(id=${activity.id})}"
+                                       th:text="#{activities.activity.button.delete}">
+                                        Delete
+                                    </a>
+                                    <a class="btn btn-sm btn-secondary"
+                                       th:href="@{/activities/request/add/{id}(id=${activity.id})}"
+                                       th:text="#{activities.activity.button.request_to_add}">
+                                        Request to add
+                                    </a>
+                                    <a class="btn btn-sm btn-secondary"
+                                       th:href="@{/activities/request/complete/{id}(id=${activity.id})}"
+                                       th:text="#{activities.activity.button.request_to_complete}">
+                                        Request to complete
+                                    </a>
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                            data-target="#timeSpentModal" th:attrappend="data-target=${activity.id}">
+                                            data-target="#timeSpentModal" th:attrappend="data-target=${activity.id}"
+                                            th:text="#{activities.activity.button.mark_time_spent}">
                                         Mark time spent
                                     </button>
-
-                                    <div class="modal fade" th:attrappend="id=${activity.id}" id="timeSpentModal"
-                                         tabindex="-1" role="dialog" aria-labelledby="timeSpentModalTitle"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="timeSpentModalTitle">Enter amount of
-                                                        time spent</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form th:action="@{/activities/mark-time/{id}(id=${activity.id})}"
-                                                      th:object="${duration}" method="post">
-                                                    <div class="modal-body">
-                                                        <div class="input-group mb-3">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">Days</span>
-                                                            </div>
-                                                            <input th:field="*{days}" type="number" class="form-control"
-                                                                   aria-label="days">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">Hours</span>
-                                                            </div>
-                                                            <input th:field="*{hours}" type="number"
-                                                                   class="form-control" aria-label="hours">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">Minutes</span>
-                                                            </div>
-                                                            <input th:field="*{minutes}" type="number"
-                                                                   class="form-control" aria-label="minutes">
-                                                        </div>
-                                                        <p th:if="${#fields.hasErrors('days')}" th:errors="*{days}"
-                                                           class="text-danger"></p>
-                                                        <p th:if="${#fields.hasErrors('hours')}" th:errors="*{hours}"
-                                                           class="text-danger"></p>
-                                                        <p th:if="${#fields.hasErrors('minutes')}"
-                                                           th:errors="*{minutes}" class="text-danger"></p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">Confirm</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                </div>
+                            </div>
+                            <!--Start modal window-->
+                            <div aria-hidden="true" aria-labelledby="timeSpentModalTitle" class="modal fade"
+                                 id="timeSpentModal" role="dialog" tabindex="-1"
+                                 th:attrappend="id=${activity.id}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="timeSpentModalTitle"
+                                                th:text="#{activities.modal.title}">
+                                                Enter amount of time spent
+                                            </h5>
+                                            <button aria-label="Close" class="close" data-dismiss="modal"
+                                                    type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
+                                        <form method="post"
+                                              th:action="@{/activities/mark-time/{id}(id=${activity.id})}"
+                                              th:object="${duration}">
+                                            <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"
+                                                              th:text="#{activities.modal.days}">Days</span>
+                                                    </div>
+                                                    <input aria-label="days" class="form-control" th:field="*{days}"
+                                                           type="number">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"
+                                                              th:text="#{activities.modal.hours}">Hours</span>
+                                                    </div>
+                                                    <input aria-label="hours" class="form-control"
+                                                           th:field="*{hours}" type="number">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"
+                                                              th:text="#{activities.modal.minutes}">Minutes</span>
+                                                    </div>
+                                                    <input aria-label="minutes" class="form-control"
+                                                           th:field="*{minutes}" type="number">
+                                                </div>
+                                                <p class="text-danger" th:errors="*{days}"
+                                                   th:if="${#fields.hasErrors('days')}"></p>
+                                                <p class="text-danger" th:errors="*{hours}"
+                                                   th:if="${#fields.hasErrors('hours')}"></p>
+                                                <p class="text-danger"
+                                                   th:errors="*{minutes}" th:if="${#fields.hasErrors('minutes')}"></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" data-dismiss="modal"
+                                                        th:text="#{activities.modal.button.close}"
+                                                        type="button">
+                                                    Close
+                                                </button>
+                                                <button class="btn btn-primary"
+                                                        th:text="#{activities.modal.button.confirm}"
+                                                        type="submit">
+                                                    Confirm
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
+                            <!--End modal window-->
                             <small>
-                                <span>Status: </span><span th:text="${activity.status}"></span>
+                                <span th:text="#{activities.activity.status}">Status:</span>
+                                <span
+                                        th:text="${activity.status}">
+                                </span>
                             </small>
                         </div>
                     </div>

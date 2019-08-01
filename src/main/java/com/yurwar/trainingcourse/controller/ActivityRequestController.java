@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ActivityRequestController {
@@ -31,21 +30,21 @@ public class ActivityRequestController {
         return "activity-requests";
     }
 
-    @PostMapping("/activities/request/add/{id}")
+    @GetMapping("/activities/request/add/{id}")
     public String makeAddActivityRequest(@AuthenticationPrincipal User user,
                                          @PathVariable("id") long activityId) {
         activityRequestService.makeAddActivityRequest(user.getId(), activityId);
         return "redirect:/activities";
     }
 
-    @PostMapping("/activities/request/complete/{id}")
+    @GetMapping("/activities/request/complete/{id}")
     public String makeCompleteActivityRequest(@AuthenticationPrincipal User user,
                                               @PathVariable("id") long activityId) {
         activityRequestService.makeCompleteActivityRequest(user.getId(), activityId);
         return "redirect:/activities";
     }
 
-    @PostMapping("/activities/request/approve/{id}")
+    @GetMapping("/activities/request/approve/{id}")
     public String approveActivityRequest(@PathVariable("id") long activityRequestId) {
         ActivityRequest activityRequest = activityRequestService
                 .findActivityRequestById(activityRequestId);
@@ -66,7 +65,7 @@ public class ActivityRequestController {
         return "redirect:/activities/request";
     }
 
-    @PostMapping("/activities/request/reject/{id}")
+    @GetMapping("/activities/request/reject/{id}")
     public String rejectActivityRequest(@PathVariable("id") long activityRequestId) {
         ActivityRequest activityRequest = activityRequestService.findActivityRequestById(activityRequestId);
 

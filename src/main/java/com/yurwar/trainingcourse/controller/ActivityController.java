@@ -65,7 +65,7 @@ public class ActivityController {
         return "redirect:/activities";
     }
 
-    @PostMapping("/activities/delete/{id}")
+    @GetMapping("/activities/delete/{id}")
     public String deleteActivity(@PathVariable("id") long activityId,
                                  Model model) {
         Activity activity = activityService.findActivityById(activityId);

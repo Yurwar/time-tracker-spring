@@ -3,7 +3,7 @@
     <nav>
         <ul class="pagination">
             <li class="page-item disabled">
-                <p class="page-link">Items on page</p>
+                <p class="page-link" th:text="#{paginator.items}"></p>
             </li>
             <li class="page-item" th:classappend="${c == page.size} ? 'active'"
                 th:each="c : ${#numbers.sequence(5, 20, 5)}">
@@ -17,14 +17,14 @@
         <ul class="pagination">
             <li class="page-item" th:classappend="${page.number == 0} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{${url}(page=${page.number < 1 ? 0 : page.number - 1}, size=${page.size})}">
+                   th:href="@{${url}(page=${page.number < 1 ? 0 : page.number - 1}, size=${page.size})}"
+                   th:text="#{paginator.previous}">
                     Previous
                 </a>
             </li>
             <li class="page-item"
                 th:classappend="${i == page.number} ? 'active'"
-                th:each="i : ${#numbers.sequence(page.number, page.totalPages - 1 > 5 + page.number - 1 ? 5 + page.number - 1 : page.totalPages - 1, 1)}"
-            >
+                th:each="i : ${#numbers.sequence(page.number, page.totalPages - 1 > 5 + page.number - 1 ? 5 + page.number - 1 : page.totalPages - 1, 1)}">
                 <a class="page-link" th:if="${i == page.number}" href="#" th:text="${i + 1}"></a>
                 <a class="page-link" th:unless="${i == page.number}" th:href="@{${url}(page=${i}, size=${page.size})}"
                    th:text="${i + 1}"></a>
@@ -35,7 +35,8 @@
                 </a>
             </li>
             <li class="page-item" th:classappend="${page.number == page.totalPages - 1} ? 'disabled'">
-                <a class="page-link" th:href="@{${url}(page=${page.number} + 1, size=${page.size})}">
+                <a class="page-link" th:href="@{${url}(page=${page.number} + 1, size=${page.size})}"
+                   th:text="#{paginator.next}">
                     Next
                 </a>
             </li>

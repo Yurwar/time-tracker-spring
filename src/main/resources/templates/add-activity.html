@@ -14,30 +14,38 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h1 class="display-4">Add activity</h1>
+            <h1 class="display-4" th:text="#{activities.add.title}">Add activity</h1>
             <hr>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <form action="#" th:action="@{/activities/add}" th:object="${activity}" method="post">
+                    <form method="post" th:action="@{/activities/add}" th:object="${activity}">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="name" class="col-form-label">Activity name</label>
-                                <input type="text" id="name" th:field="*{name}" placeholder="Name" class="form-control"
+                                <label class="col-form-label" for="name"
+                                       th:text="#{activities.add.activity_name.label}">Activity name</label>
+                                <input class="form-control" id="name" th:field="*{name}"
+                                       th:placeholder="#{activities.add.activity_name.placeholder}" type="text"
                                        required/>
                                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                                       class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="description" class="col-form-label">Activity description</label>
-                                <textarea id="description" th:field="*{description}" placeholder="Description" rows="4"
+                                <label class="col-form-label" for="description"
+                                       th:text="#{activities.add.description.label}">Activity description</label>
+                                <textarea id="description" rows="4"
+                                          th:field="*{description}"
+                                          th:placeholder="#{activities.add.description.placeholder}"
                                           class="form-control"></textarea>
                                 <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                                       class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="importanceLevel" class="col-form-label">Activity importance</label>
+                                <label class="col-form-label" for="importanceLevel"
+                                       th:text="#{activities.add.importance.label}">
+                                    Activity importance
+                                </label>
                                 <select th:field="*{importance}" class="form-control" id="importanceLevel">
                                     <option th:each="importance : ${importanceLevels}"
                                             th:text="${importance}"
@@ -50,7 +58,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mt-1">
-                                <input type="submit" class="btn btn-primary" value="Add activity">
+                                <input class="btn btn-primary" th:value="#{activities.add.button.submit}" type="submit">
                             </div>
                         </div>
                     </form>

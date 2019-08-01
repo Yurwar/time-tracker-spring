@@ -14,7 +14,7 @@ public class PageController implements ErrorController {
 
     @GetMapping("/access-denied")
     public String getAccessDeniedPage() {
-        return "/error/access-denied";
+        return "/error/403";
     }
 
     @Override
