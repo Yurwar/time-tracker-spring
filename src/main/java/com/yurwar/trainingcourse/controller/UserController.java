@@ -7,6 +7,8 @@ import com.yurwar.trainingcourse.service.UserService;
 import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +29,11 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String getListOfUsers(Model model) {
-        model.addAttribute("users", userService.findAllUsers());
+    public String getListOfUsers(Model model,
+                                 @PageableDefault(size = 15,
+                                         sort = {"lastName", "firstName"}) Pageable pageable) {
+
+        model.addAttribute("users", userService.findAllUsersPageable(pageable));
         return "users";
     }
 

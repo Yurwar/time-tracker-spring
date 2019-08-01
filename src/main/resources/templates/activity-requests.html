@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
     <meta charset="UTF-8">
     <title>Activity requests</title>
@@ -15,6 +15,7 @@
     <div th:if="${activityRequests.isEmpty()}">
         <p> No activity requests available </p>
     </div>
+    <div th:replace="~{/fragments/pagination.html::page-navigation(url='/activities/request',page=${activityRequests})}"></div>
     <div th:unless="${activityRequests.isEmpty()}" class="row">
         <div th:each="activityRequest : ${activityRequests}" class="col-md-3">
             <div class="card mb-4 shadow-sm">
@@ -43,6 +44,7 @@
             </div>
         </div>
     </div>
+    <div th:replace="~{/fragments/pagination.html::page-navigation(url='/activities/request',page=${activityRequests})}"></div>
 </div>
 
 

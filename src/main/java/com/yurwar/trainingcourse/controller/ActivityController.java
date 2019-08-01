@@ -8,6 +8,9 @@ import com.yurwar.trainingcourse.entity.User;
 import com.yurwar.trainingcourse.service.ActivityService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +33,12 @@ public class ActivityController {
     }
 
     @GetMapping("/activities")
-    public String getActivitiesPage(Model model) {
-        model.addAttribute("activities", activityService.findAllActivities());
+    public String getActivitiesPage(Model model,
+                                    @PageableDefault(sort = {"id"},
+                                            direction =  Sort.Direction.DESC,
+                                            size = 5) Pageable pageable) {
+
+        model.addAttribute("activityPage", activityService.findAllActivitiesPageable(pageable));
         return "activities";
     }
 
@@ -77,11 +84,14 @@ public class ActivityController {
                                 @PathVariable("id") long activityId,
                                 @ModelAttribute("duration") @Valid ActivityDurationDTO durationDTO,
                                 BindingResult bindingResult,
+                                @PageableDefault(sort = {"id"},
+                                        direction =  Sort.Direction.DESC,
+                                        size = 5) Pageable pageable,
                                 Model model) {
         log.info(durationDTO);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("activities", activityService.findAllActivities());
+            model.addAttribute("activityPage", activityService.findAllActivitiesPageable(pageable));
             return "activities";
         }
 

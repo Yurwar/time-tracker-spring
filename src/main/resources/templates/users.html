@@ -10,10 +10,11 @@
 <body>
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
+<div class="container">
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header" th:text="#{users.header}">All registered users</div>
+            <div class="card-header display-4" th:text="#{users.header}">All registered users</div>
             <div class="card-body">
                 <div th:if="${users.isEmpty()}">
                     <p th:text="#{users.empty}"></p>
@@ -25,7 +26,6 @@
                         <th th:text="#{users.first_name}">First name</th>
                         <th th:text="#{users.last_name}">Last name</th>
                         <th th:text="#{users.username}">Email</th>
-                        <th th:text="#{users.password}">Password</th>
                         <th th:text="#{users.active}">Active</th>
                         <th th:text="#{users.roles}">Roles</th>
                         <th th:text="#{users.edit}">Edit</th>
@@ -38,7 +38,6 @@
                         <td><span th:text="${user.firstName}"></span ></td>
                         <td><span th:text="${user.lastName}"></span ></td>
                         <td><span th:text="${user.username}"></span ></td>
-                        <td><span th:text="${user.password}"></span ></td>
                         <td><span th:text="${user.enabled}"></span ></td>
                         <td><span th:text="${user.authorities}"></span ></td>
                         <td>
@@ -55,8 +54,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="card-footer" th:include="~{/fragments/pagination.html::page-navigation(url='/users',page=${users})}"></div>
         </div>
     </div>
+</div>
 </div>
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
