@@ -1,9 +1,9 @@
 package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.UpdateUserDTO;
-import com.yurwar.trainingcourse.entity.Authority;
-import com.yurwar.trainingcourse.entity.User;
-import com.yurwar.trainingcourse.service.UserService;
+import com.yurwar.trainingcourse.model.entity.Authority;
+import com.yurwar.trainingcourse.model.entity.User;
+import com.yurwar.trainingcourse.model.service.UserService;
 import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

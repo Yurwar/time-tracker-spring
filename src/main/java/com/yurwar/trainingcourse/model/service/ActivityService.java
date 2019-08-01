@@ -1,11 +1,11 @@
-package com.yurwar.trainingcourse.service;
+package com.yurwar.trainingcourse.model.service;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
-import com.yurwar.trainingcourse.entity.Activity;
-import com.yurwar.trainingcourse.entity.ActivityStatus;
-import com.yurwar.trainingcourse.entity.User;
-import com.yurwar.trainingcourse.repository.ActivityRepository;
+import com.yurwar.trainingcourse.model.entity.Activity;
+import com.yurwar.trainingcourse.model.entity.ActivityStatus;
+import com.yurwar.trainingcourse.model.entity.User;
+import com.yurwar.trainingcourse.model.repository.ActivityRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

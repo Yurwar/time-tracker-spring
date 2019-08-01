@@ -1,9 +1,9 @@
-package com.yurwar.trainingcourse.service;
+package com.yurwar.trainingcourse.model.service;
 
-import com.yurwar.trainingcourse.entity.*;
-import com.yurwar.trainingcourse.repository.ActivityRepository;
-import com.yurwar.trainingcourse.repository.ActivityRequestRepository;
-import com.yurwar.trainingcourse.repository.UserRepository;
+import com.yurwar.trainingcourse.model.entity.*;
+import com.yurwar.trainingcourse.model.repository.ActivityRepository;
+import com.yurwar.trainingcourse.model.repository.ActivityRequestRepository;
+import com.yurwar.trainingcourse.model.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

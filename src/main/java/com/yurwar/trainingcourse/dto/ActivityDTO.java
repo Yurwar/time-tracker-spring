@@ -1,6 +1,6 @@
 package com.yurwar.trainingcourse.dto;
 
-import com.yurwar.trainingcourse.entity.ActivityImportance;
+import com.yurwar.trainingcourse.model.entity.ActivityImportance;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

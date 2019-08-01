@@ -1,6 +1,6 @@
 package com.yurwar.trainingcourse.config;
 
-import com.yurwar.trainingcourse.service.UserService;
+import com.yurwar.trainingcourse.model.service.UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

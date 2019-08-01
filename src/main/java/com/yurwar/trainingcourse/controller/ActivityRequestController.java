@@ -1,9 +1,9 @@
 package com.yurwar.trainingcourse.controller;
 
-import com.yurwar.trainingcourse.entity.ActivityRequest;
-import com.yurwar.trainingcourse.entity.ActivityRequestStatus;
-import com.yurwar.trainingcourse.entity.User;
-import com.yurwar.trainingcourse.service.ActivityRequestService;
+import com.yurwar.trainingcourse.model.entity.ActivityRequest;
+import com.yurwar.trainingcourse.model.entity.ActivityRequestStatus;
+import com.yurwar.trainingcourse.model.entity.User;
+import com.yurwar.trainingcourse.model.service.ActivityRequestService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;

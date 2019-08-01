@@ -1,11 +1,11 @@
-package com.yurwar.trainingcourse.service;
+package com.yurwar.trainingcourse.model.service;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
 import com.yurwar.trainingcourse.dto.UpdateUserDTO;
-import com.yurwar.trainingcourse.entity.Authority;
-import com.yurwar.trainingcourse.entity.User;
-import com.yurwar.trainingcourse.repository.ActivityRepository;
-import com.yurwar.trainingcourse.repository.UserRepository;
+import com.yurwar.trainingcourse.model.entity.Authority;
+import com.yurwar.trainingcourse.model.entity.User;
+import com.yurwar.trainingcourse.model.repository.ActivityRepository;
+import com.yurwar.trainingcourse.model.repository.UserRepository;
 import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

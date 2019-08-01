@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.entity;
+package com.yurwar.trainingcourse.model.entity;
 
 public enum ActivityRequestAction {
     ADD,

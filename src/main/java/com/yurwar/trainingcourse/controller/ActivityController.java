@@ -2,10 +2,10 @@ package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
-import com.yurwar.trainingcourse.entity.Activity;
-import com.yurwar.trainingcourse.entity.ActivityImportance;
-import com.yurwar.trainingcourse.entity.User;
-import com.yurwar.trainingcourse.service.ActivityService;
+import com.yurwar.trainingcourse.model.entity.Activity;
+import com.yurwar.trainingcourse.model.entity.ActivityImportance;
+import com.yurwar.trainingcourse.model.entity.User;
+import com.yurwar.trainingcourse.model.service.ActivityService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
