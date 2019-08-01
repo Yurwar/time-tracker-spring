@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.Set;
@@ -29,7 +31,7 @@ public class ActivityService {
         return activityRepository.findAll(pageable);
     }
 
-    public void addNewActivity(ActivityDTO activityDTO) {
+    public void createActivity(ActivityDTO activityDTO) {
         activityRepository.save(Activity.builder()
                 .name(activityDTO.getName())
                 .description(activityDTO.getDescription())
@@ -44,7 +46,9 @@ public class ActivityService {
                 new IllegalArgumentException("Invalid activity id: " + activityId));
     }
 
-    public void deleteActivity(Activity activity) {
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void deleteActivity(long id) {
+        Activity activity = findActivityById(id);
         Set<User> users = activity.getUsers();
         for (User user : users) {
             user.getActivities().remove(activity);
@@ -52,12 +56,11 @@ public class ActivityService {
         activityRepository.delete(activity);
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void markTimeSpent(long activityId, User user, ActivityDurationDTO durationDTO) {
         Activity activity = findActivityById(activityId);
-        log.info("Try to mark time spent to activity: " + activity + " with duration: " + durationDTO);
 
         if (activity.getStatus().equals(ActivityStatus.ACTIVE) && activity.getUsers().contains(user)) {
-            log.info("Marking time spent");
             Duration duration = activity.getDuration();
 
             duration = duration

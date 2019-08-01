@@ -6,7 +6,7 @@ public enum ActivityImportance {
     HIGH("High"),
     EXTREMELY_HIGH("Extremely high");
 
-    private String simpleName;
+    private final String simpleName;
 
     ActivityImportance(String simpleName) {
         this.simpleName = simpleName;

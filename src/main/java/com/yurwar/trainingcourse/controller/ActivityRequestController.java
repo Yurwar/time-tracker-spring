@@ -30,7 +30,6 @@ public class ActivityRequestController {
     public String getActivityRequests(Model model,
                                       @PageableDefault(sort = {"id"},
                                               direction = Sort.Direction.DESC) Pageable pageable) {
-
         model.addAttribute("activityRequests", activityRequestService.findAllRequestsPageable(pageable));
         return "activity-requests";
     }
@@ -79,6 +78,7 @@ public class ActivityRequestController {
         }
 
         activityRequestService.rejectActivityRequest(activityRequestId);
+
         return "redirect:/activities/request";
     }
 

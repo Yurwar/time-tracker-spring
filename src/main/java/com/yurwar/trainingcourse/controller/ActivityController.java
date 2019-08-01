@@ -2,12 +2,10 @@ package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.ActivityDTO;
 import com.yurwar.trainingcourse.dto.ActivityDurationDTO;
-import com.yurwar.trainingcourse.model.entity.Activity;
 import com.yurwar.trainingcourse.model.entity.ActivityImportance;
 import com.yurwar.trainingcourse.model.entity.User;
 import com.yurwar.trainingcourse.model.service.ActivityService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -23,9 +21,8 @@ import javax.validation.Valid;
 @Log4j2
 @Controller
 public class ActivityController {
-    private ActivityService activityService;
+    private final ActivityService activityService;
 
-    @Autowired
     public ActivityController(ActivityService activityService) {
         this.activityService = activityService;
     }
@@ -35,7 +32,6 @@ public class ActivityController {
                                     @PageableDefault(sort = {"id"},
                                             direction = Sort.Direction.DESC,
                                             size = 5) Pageable pageable) {
-
         model.addAttribute("activityPage", activityService.findAllActivitiesPageable(pageable));
         return "activities";
     }
@@ -51,24 +47,19 @@ public class ActivityController {
     public String addActivity(@ModelAttribute("activity") @Valid ActivityDTO activityDTO,
                               BindingResult bindingResult,
                               Model model) {
-        log.info(activityDTO);
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("importanceLevels", ActivityImportance.values());
             return "add-activity";
         }
 
-        activityService.addNewActivity(activityDTO);
+        activityService.createActivity(activityDTO);
 
         return "redirect:/activities";
     }
 
     @GetMapping("/activities/delete/{id}")
-    public String deleteActivity(@PathVariable("id") long activityId,
-                                 Model model) {
-        Activity activity = activityService.findActivityById(activityId);
-        activityService.deleteActivity(activity);
-
+    public String deleteActivity(@PathVariable("id") long activityId) {
+        activityService.deleteActivity(activityId);
         return "redirect:/activities";
     }
 

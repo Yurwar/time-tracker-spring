@@ -4,7 +4,7 @@ public enum ActivityRequestAction {
     ADD("Add"),
     REMOVE("Remove");
 
-    private String simpleName;
+    private final String simpleName;
 
     ActivityRequestAction(String simpleName) {
         this.simpleName = simpleName;

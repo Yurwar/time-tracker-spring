@@ -5,7 +5,7 @@ public enum ActivityStatus {
     ACTIVE("Active"),
     COMPLETED("Completed");
 
-    private String simpleName;
+    private final String simpleName;
 
     ActivityStatus(String simpleName) {
         this.simpleName = simpleName;

@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ActivityRequestRepository extends JpaRepository<ActivityRequest, Long> {
-    boolean existsByActivityIdAndUserId(long activityId, long userId);
-
     List<ActivityRequest> findByActivityIdAndUserId(Long activityId, Long userId);
 }

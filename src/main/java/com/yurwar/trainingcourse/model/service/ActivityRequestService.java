@@ -5,10 +5,10 @@ import com.yurwar.trainingcourse.model.repository.ActivityRepository;
 import com.yurwar.trainingcourse.model.repository.ActivityRequestRepository;
 import com.yurwar.trainingcourse.model.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -20,7 +20,6 @@ public class ActivityRequestService {
     private final UserRepository userRepository;
     private final ActivityRepository activityRepository;
 
-    @Autowired
     public ActivityRequestService(ActivityRequestRepository activityRequestRepository, UserRepository userRepository, ActivityRepository activityRepository) {
         this.activityRequestRepository = activityRequestRepository;
         this.userRepository = userRepository;
@@ -31,6 +30,7 @@ public class ActivityRequestService {
         return activityRequestRepository.findAll(pageable);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void makeAddActivityRequest(long userId, long activityId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new IllegalArgumentException("Invalid user id: " + userId));
@@ -82,6 +82,7 @@ public class ActivityRequestService {
         }
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void makeCompleteActivityRequest(long userId, long activityId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new IllegalArgumentException("Invalid user id: " + userId));
@@ -123,14 +124,12 @@ public class ActivityRequestService {
         }
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void approveAddActivityRequest(long activityRequestId) {
-        log.info("Try to approve activity request");
-
         ActivityRequest activityRequest = findActivityRequestById(activityRequestId);
 
-        User user = activityRequest.getUser();
         Activity activity = activityRequest.getActivity();
+        User user = activityRequest.getUser();
 
         switch (activity.getStatus()) {
             case PENDING: {
@@ -156,7 +155,7 @@ public class ActivityRequestService {
                 break;
             }
             case COMPLETED: {
-                log.info("Can not approve request for completed activity");
+                log.info("Can not approve add request for completed activity");
                 activityRequest.setStatus(ActivityRequestStatus.REJECTED);
                 break;
             }
@@ -164,13 +163,15 @@ public class ActivityRequestService {
         activityRequestRepository.save(activityRequest);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void approveCompleteActivityRequest(long activityRequestId) {
         ActivityRequest activityRequest = findActivityRequestById(activityRequestId);
+
         Activity activity = activityRequest.getActivity();
 
         switch (activity.getStatus()) {
             case PENDING: {
-                log.info("Can not approve request for pending activity");
+                log.info("Can not approve complete request for pending activity");
                 break;
             }
             case ACTIVE: {
@@ -190,6 +191,7 @@ public class ActivityRequestService {
         }
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void rejectActivityRequest(long activityRequestId) {
         ActivityRequest activityRequest = findActivityRequestById(activityRequestId);
         activityRequest.setStatus(ActivityRequestStatus.REJECTED);

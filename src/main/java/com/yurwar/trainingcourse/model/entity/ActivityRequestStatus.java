@@ -5,7 +5,7 @@ public enum ActivityRequestStatus {
     APPROVED("Approved"),
     REJECTED("Rejected");
 
-    private String simpleName;
+    private final String simpleName;
 
     ActivityRequestStatus(String simpleName) {
         this.simpleName = simpleName;
