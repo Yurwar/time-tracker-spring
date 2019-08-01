@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="mt-3" th:fragment="page-navigation(url,page)" th:if="${page.totalPages > 0}">
+    <nav>
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <p class="page-link" th:text="#{paginator.items}"></p>
+            </li>
+            <li class="page-item" th:classappend="${c == page.size} ? 'active'"
+                th:each="c : ${#numbers.sequence(5, 20, 5)}">
+                <a class="page-link" th:if="${c == page.size}" href="#" th:text="${c}"></a>
+                <a class="page-link" th:unless="${c == page.size}" th:href="@{${url}(page=${page.number},size=${c})}"
+                   th:text="${c}"></a>
+            </li>
+        </ul>
+    </nav>
+    <nav>
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${page.number == 0} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{${url}(page=${page.number < 1 ? 0 : page.number - 1}, size=${page.size})}"
+                   th:text="#{paginator.previous}">
+                    Previous
+                </a>
+            </li>
+            <li class="page-item"
+                th:classappend="${i == page.number} ? 'active'"
+                th:each="i : ${#numbers.sequence(page.number, page.totalPages - 1 > 5 + page.number - 1 ? 5 + page.number - 1 : page.totalPages - 1, 1)}">
+                <a class="page-link" th:if="${i == page.number}" href="#" th:text="${i + 1}"></a>
+                <a class="page-link" th:unless="${i == page.number}" th:href="@{${url}(page=${i}, size=${page.size})}"
+                   th:text="${i + 1}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${page.number + 5 < page.totalPages}">
+                <a class="page-link" href="#">
+                    ...
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${page.number == page.totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{${url}(page=${page.number} + 1, size=${page.size})}"
+                   th:text="#{paginator.next}">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</html>

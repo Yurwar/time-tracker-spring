@@ -1,74 +1,87 @@
 package com.yurwar.trainingcourse.controller;
 
-import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.model.Role;
-import com.yurwar.trainingcourse.model.User;
-import com.yurwar.trainingcourse.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.yurwar.trainingcourse.dto.UpdateUserDTO;
+import com.yurwar.trainingcourse.model.entity.Authority;
+import com.yurwar.trainingcourse.model.entity.User;
+import com.yurwar.trainingcourse.model.service.UserService;
+import com.yurwar.trainingcourse.util.exception.UsernameNotUniqueException;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Controller
+@Log4j2
 @RequestMapping
 public class UserController {
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/users")
-    public String getListOfUsers(Model model) {
-        model.addAttribute("users", userService.findAllUsers());
+    public String getListOfUsers(Model model,
+                                 @PageableDefault(size = 15,
+                                         sort = {"lastName", "firstName"}) Pageable pageable) {
+        model.addAttribute("users", userService.findAllUsersPageable(pageable));
         return "users";
     }
 
     @GetMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
-        User userToDelete = userService.findUserById(id);
-
-        userService.deleteUser(userToDelete);
-        model.addAttribute("users", userService.findAllUsers());
-        return "users";
+    public String deleteUser(@PathVariable("id") long id) {
+        userService.deleteUser(id);
+        return "redirect:/users";
     }
 
     @GetMapping("/users/update/{id}")
     public String getUserUpdatePage(@PathVariable("id") long id, Model model) {
-        User user = userService.findUserById(id);
+        User user = userService.getUserById(id);
 
         model.addAttribute("user", user);
-        model.addAttribute("roles", Role.values());
+        model.addAttribute("authorities", Authority.values());
         return "update-user";
     }
 
     @PostMapping("/users/update/{id}")
     public String updateUser(@PathVariable("id") long id,
-                             @Valid RegistrationUserDTO userDTO,
+                             @ModelAttribute("user") @Valid UpdateUserDTO userDTO,
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("authorities", Authority.values());
             return "update-user";
         }
-        User user = userService.findUserById(id);
 
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setAuthorities(userDTO.getAuthorities());
-        userService.updateUser(user);
-        model.addAttribute("users", userService.findAllUsers());
-        return "users";
+        try {
+            userService.updateUser(id, userDTO);
+        } catch (UsernameNotUniqueException e) {
+            model.addAttribute("usernameErrorMessage", e.getMessage());
+            model.addAttribute("authorities", Authority.values());
+            return "update-user";
+        }
+
+        return "redirect:/users";
+    }
+
+    @GetMapping("/profile")
+    public String getUserProfilePage(@AuthenticationPrincipal User user,
+                                     Model model) {
+        model.addAttribute("user", userService.getUserById(user.getId()));
+        return "user-profile";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error(e.getMessage());
+        return "error/404";
     }
 }

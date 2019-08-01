@@ -1,77 +1,91 @@
 package com.yurwar.trainingcourse.controller;
 
-import com.yurwar.trainingcourse.model.ActivityRequest;
-import com.yurwar.trainingcourse.model.ActivityRequestAction;
-import com.yurwar.trainingcourse.model.User;
-import com.yurwar.trainingcourse.service.ActivityRequestService;
-import com.yurwar.trainingcourse.service.UserService;
+import com.yurwar.trainingcourse.model.entity.ActivityRequest;
+import com.yurwar.trainingcourse.model.entity.ActivityRequestStatus;
+import com.yurwar.trainingcourse.model.entity.User;
+import com.yurwar.trainingcourse.model.service.ActivityRequestService;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
+@Log4j2
 public class ActivityRequestController {
     private final ActivityRequestService activityRequestService;
-    private final UserService userService;
-    private final ActivityController activityController;
 
-    public ActivityRequestController(ActivityRequestService activityRequestService, UserService userService, ActivityController activityController) {
+    public ActivityRequestController(ActivityRequestService activityRequestService) {
         this.activityRequestService = activityRequestService;
-        this.userService = userService;
-        this.activityController = activityController;
     }
 
     @GetMapping("/activities/request")
-    public String getActivityRequests(Model model) {
-        model.addAttribute("activityRequests", activityRequestService.findAllRequests());
+    public String getActivityRequests(Model model,
+                                      @PageableDefault(sort = {"id"},
+                                              direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("activityRequests", activityRequestService.findAllRequestsPageable(pageable));
         return "activity-requests";
     }
 
-
-    @PostMapping("/activities/request/{id}")
-    public String makeActivityRequest(@AuthenticationPrincipal User user,
-                                      @PathVariable("id") long activityId,
-                                      @RequestParam String action,
-                                      Model model) {
-        activityRequestService.addActivityRequest(user.getId(), activityId, action);
-        return activityController.getActivitiesPage(model);
+    @GetMapping("/activities/request/add/{id}")
+    public String makeAddActivityRequest(@AuthenticationPrincipal User user,
+                                         @PathVariable("id") long activityId) {
+        activityRequestService.makeAddActivityRequest(user.getId(), activityId);
+        return "redirect:/activities";
     }
 
-    @PostMapping("/activities/request/approve/{id}")
-    public String approveActivityRequest(@PathVariable("id") long activityRequestId,
-                                         Model model) {
+    @GetMapping("/activities/request/complete/{id}")
+    public String makeCompleteActivityRequest(@AuthenticationPrincipal User user,
+                                              @PathVariable("id") long activityId) {
+        activityRequestService.makeCompleteActivityRequest(user.getId(), activityId);
+        return "redirect:/activities";
+    }
+
+    @GetMapping("/activities/request/approve/{id}")
+    public String approveActivityRequest(@PathVariable("id") long activityRequestId) {
         ActivityRequest activityRequest = activityRequestService
                 .findActivityRequestById(activityRequestId);
 
-        if (activityRequest.getStatus() != null) {
-            return getActivityRequests(model);
+        if (!activityRequest.getStatus().equals(ActivityRequestStatus.PENDING)) {
+            return "redirect:/activities/request";
         }
 
-        ActivityRequestAction action = activityRequest.getAction();
-        switch (action) {
+        switch (activityRequest.getAction()) {
             case ADD:
                 activityRequestService.approveAddActivityRequest(activityRequestId);
                 break;
             case REMOVE:
-                activityRequestService.approveRemoveActivityRequest(activityRequestId);
+                activityRequestService.approveCompleteActivityRequest(activityRequestId);
                 break;
         }
 
-        return getActivityRequests(model);
+        return "redirect:/activities/request";
     }
 
-    @PostMapping("/activities/request/reject/{id}")
-    public String rejectActivityRequest(@PathVariable("id") long activityRequestId,
-                                        Model model) {
-        if (activityRequestService.findActivityRequestById(activityRequestId).getStatus() != null) {
-            return getActivityRequests(model);
+    @GetMapping("/activities/request/reject/{id}")
+    public String rejectActivityRequest(@PathVariable("id") long activityRequestId) {
+        ActivityRequest activityRequest = activityRequestService.findActivityRequestById(activityRequestId);
+
+        if (!activityRequest.getStatus().equals(ActivityRequestStatus.PENDING)) {
+            return "redirect:/activities/request";
         }
 
         activityRequestService.rejectActivityRequest(activityRequestId);
-        return getActivityRequests(model);
+
+        return "redirect:/activities/request";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error(e.getMessage());
+        return "error/404";
     }
 }

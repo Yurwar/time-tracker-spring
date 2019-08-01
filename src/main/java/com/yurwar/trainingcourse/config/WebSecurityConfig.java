@@ -1,6 +1,6 @@
 package com.yurwar.trainingcourse.config;
 
-import com.yurwar.trainingcourse.service.UserService;
+import com.yurwar.trainingcourse.model.service.UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,25 +38,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/js/**", "/css/**", "/index", "/access-denied")
+                    .antMatchers("/js/**", "/images/**", "/css/**", "/index", "/", "/access-denied", "/favicon.ico", "/error/**")
                     .permitAll()
-                    .antMatchers("/users/**", "/api/user")
+                    .antMatchers("/users/**", "/activities/request", "/activities/add", "/activities/delete/**", "/activities/edit/**", "/activities/request/approve/**", "/activities/request/reject/**")
                     .hasAuthority("ADMIN")
-                    .antMatchers("/registration")
+                    .antMatchers("/profile", "/activities","/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**")
+                    .hasAnyAuthority("ADMIN", "USER")
+                    .antMatchers("/registration", "/login")
                     .anonymous()
+                    .anyRequest()
+                    .denyAll()
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .failureUrl("/login?error")
                     .usernameParameter("username")
-                    .permitAll()
+                    .defaultSuccessUrl("/profile")
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
-                    .permitAll()
                 .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler);
+                    .exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler);
     }
 }

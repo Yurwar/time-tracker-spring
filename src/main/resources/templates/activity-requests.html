@@ -1,46 +1,82 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Activity requests</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
 
 <div class="container">
-    <div th:if="${activityRequests.isEmpty()}">
-        <p> No activity requests available </p>
-    </div>
-    <div th:unless="${activityRequests.isEmpty()}" class="row">
-        <div th:each="activityRequest : ${activityRequests}" class="col-md-3">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                    <p><span th:text="${activityRequest.activity.name}"></span></p>
-                    <p><span th:text="${activityRequest.user.username}"></span></p>
-                    <p><span th:text="${#temporals.format(activityRequest.getRequestDate(), 'dd-MM-yyyy HH:mm')}"></span></p>
-                </div>
-                <div class="card-body">
-                    <p><span>Id: </span><span th:text="${activityRequest.id}"></span></p>
-                    <p><span>Activity id: </span><span th:text="${activityRequest.activity.id}"></span></p>
-                    <p><span>User id: </span><span th:text="${activityRequest.user.id}"></span></p>
-                    <p><span>Action: </span><span th:text="${activityRequest.action}"></span></p>
-                    <p><span>Status: </span><span th:text="${activityRequest.status}"></span></p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <form th:action="@{/activities/request/approve/{id}(id=${activityRequest.id})}" method="post">
-                                <button type="submit" class="btn btn-sm btn-secondary">Approve</button>
-                            </form>
-                            <form th:action="@{/activities/request/reject/{id}(id=${activityRequest.id})}" method="post">
-                                <button type="submit" class="btn btn-sm btn-secondary">Reject</button>
-                            </form>
+    <div class="card">
+        <div class="card-header">
+            <div th:if="${activityRequests.isEmpty()}">
+                <h1 class="display-4" th:text="#{activity.request.empty}">No activity requests available</h1>
+                <hr>
+            </div>
+            <div th:unless="${activityRequests.isEmpty()}">
+                <h1 class="display-4" th:text="#{activity.request.title}">Activity requests</h1>
+                <hr>
+                <div th:replace="~{/fragments/pagination.html::page-navigation(url='/activities/request',page=${activityRequests})}"></div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div th:unless="${activityRequests.isEmpty()}" class="row">
+                <div th:each="activityRequest : ${activityRequests}" class="col-md-3">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <p><span th:text="${activityRequest.activity.name}"></span></p>
+                            <p><span th:text="${activityRequest.user.username}"></span></p>
+                            <p>
+                                <span th:text="${#temporals.format(activityRequest.getRequestDate(), 'dd-MM-yyyy HH:mm')}"></span>
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                <span th:text="#{activity.request.id}">Id: </span>
+                                <span th:text="${activityRequest.id}"></span>
+                            </p>
+                            <p>
+                                <span th:text="#{activity.request.activity_id}">Activity id: </span>
+                                <span th:text="${activityRequest.activity.id}"></span>
+                            </p>
+                            <p>
+                                <span th:text="#{activity.request.user_id}">User id: </span>
+                                <span th:text="${activityRequest.user.id}"></span>
+                            </p>
+                            <p>
+                                <span th:text="#{activity.request.action}">Action: </span>
+                                <span th:text="${activityRequest.action}"></span>
+                            </p>
+                            <p>
+                                <span th:text="#{activity.request.status}">Status: </span>
+                                <span th:text="${activityRequest.status}"></span>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-secondary"
+                                       th:href="@{/activities/request/approve/{id}(id=${activityRequest.id})}"
+                                       th:text="#{activity.request.button.approve}">
+                                        Approve
+                                    </a>
+                                    <a class="btn btn-sm btn-secondary"
+                                       th:href="@{/activities/request/reject/{id}(id=${activityRequest.id})}"
+                                       th:text="#{activity.request.button.reject}">
+                                        Reject
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-footer">
+            <div th:replace="~{/fragments/pagination.html::page-navigation(url='/activities/request',page=${activityRequests})}"></div>
         </div>
     </div>
 </div>
@@ -48,8 +84,14 @@
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

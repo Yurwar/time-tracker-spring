@@ -1,37 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="time_tracking_db" uuid="5b843f3a-1bb9-4030-8e23-c2f486b5dc75">
-      <driver-ref>mysql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/time_tracking_db</jdbc-url>
-      <driver-properties>
-        <property name="autoReconnect" value="true" />
-        <property name="zeroDateTimeBehavior" value="CONVERT_TO_NULL" />
-        <property name="tinyInt1isBit" value="false" />
-        <property name="characterEncoding" value="utf8" />
-        <property name="characterSetResults" value="utf8" />
-        <property name="yearIsDateType" value="false" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="time_tracker_db@localhost" uuid="4e0badd2-63ee-47eb-a4e2-5b306b070acc">
+    <data-source source="LOCAL" name="time_tracker_db_spring@localhost" uuid="6e6ae864-e5cd-47ea-8850-c04a0364d2db">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="testdb@localhost" uuid="0171276e-f2f4-422c-ba99-f80e5573c8e9">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/testdb</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="time_tracker_db@localhost [2]" uuid="4ef97573-f903-4dc1-aa42-c99c108bcf15">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/time_tracker_db_spring</jdbc-url>
     </data-source>
   </component>
 </project>

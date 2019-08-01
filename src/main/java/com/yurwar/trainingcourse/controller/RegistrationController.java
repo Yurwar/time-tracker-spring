@@ -1,15 +1,12 @@
 package com.yurwar.trainingcourse.controller;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
-import com.yurwar.trainingcourse.util.exception.LoginNotUniqueException;
-import com.yurwar.trainingcourse.service.UserService;
+import com.yurwar.trainingcourse.model.service.UserService;
+import com.yurwar.trainingcourse.util.exception.UsernameNotUniqueException;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,35 +16,33 @@ import javax.validation.Valid;
 @RequestMapping("/registration")
 public class RegistrationController {
     private final UserService userService;
-    private final MessageSource messageSource;
 
-    @Autowired
-    public RegistrationController(UserService userService,
-                                  MessageSource messageSource) {
+    public RegistrationController(UserService userService) {
         this.userService = userService;
-        this.messageSource = messageSource;
     }
 
     @GetMapping
-    public String getRegistrationPage() {
+    public String getRegistrationPage(@ModelAttribute("user") RegistrationUserDTO registrationUserDTO) {
         return "registration";
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public String registerNewUser(Model model, @Valid RegistrationUserDTO registrationUserDTO) {
-        log.info("{}", registrationUserDTO);
-        userService.saveUser(registrationUserDTO);
-        model.addAttribute("resultMessage",
-                messageSource.getMessage("users.registration.success",
-                        null,
-                        LocaleContextHolder.getLocale()));
-        return "registration";
+    public String registerNewUser(@ModelAttribute("user") @Valid RegistrationUserDTO registrationUserDTO,
+                                  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userService.createUser(registrationUserDTO);
+
+        return "redirect:/login";
     }
 
-    @ExceptionHandler(LoginNotUniqueException.class)
-    public String handleRuntimeException(Model model, LoginNotUniqueException e) {
-        model.addAttribute("resultMessage", e.getMessage());
+    @ExceptionHandler(UsernameNotUniqueException.class)
+    public String handleRuntimeException(UsernameNotUniqueException e,
+                                         Model model) {
+        model.addAttribute("user", new RegistrationUserDTO());
+        model.addAttribute("usernameErrorMessage", e.getMessage());
         return "registration";
     }
 }

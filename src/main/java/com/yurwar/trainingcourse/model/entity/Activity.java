@@ -1,4 +1,4 @@
-package com.yurwar.trainingcourse.model;
+package com.yurwar.trainingcourse.model.entity;
 
 import com.yurwar.trainingcourse.util.converter.DurationConverter;
 import com.yurwar.trainingcourse.util.converter.LocalDateTimeConverter;
@@ -19,7 +19,9 @@ import java.util.Set;
 @Table(name = "activities")
 public class Activity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "activityIdSeq", sequenceName = "activities_id_seq", allocationSize = 0)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activityIdSeq")
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
@@ -46,9 +48,8 @@ public class Activity {
     @Convert(converter = DurationConverter.class)
     private Duration duration;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "activity_id")
-    private User user;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "activities")
+    private Set<User> users;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private Set<ActivityRequest> activityRequests;

@@ -1,17 +1,16 @@
 package com.yurwar.trainingcourse.dto;
 
-
-import lombok.*;
+import com.yurwar.trainingcourse.model.entity.Authority;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-public class RegistrationUserDTO {
+@Data
+public class UpdateUserDTO {
+    private long id;
+
     @NotBlank(message = "{validation.user.first_name.not_blank}")
     @Size(min = 2, max = 50, message = "{validation.user.first_name.size}")
     private String firstName;
@@ -24,7 +23,8 @@ public class RegistrationUserDTO {
     @Size(min = 5, max = 39, message = "{validation.user.username.size}")
     private String username;
 
-    @NotBlank(message = "{validation.user.password.not_blank}")
-    @Size(min = 5, max = 39, message = "{validation.user.password.size}")
     private String password;
+
+    @Size(min = 1, message = "{validation.user.authorities.size}")
+    private Set<Authority> authorities;
 }

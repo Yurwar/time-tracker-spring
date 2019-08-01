@@ -1,8 +1,8 @@
-package com.yurwar.trainingcourse.model;
+package com.yurwar.trainingcourse.model.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
+public enum Authority implements GrantedAuthority {
     USER,
     ADMIN;
 

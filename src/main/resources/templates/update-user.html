@@ -1,64 +1,94 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
     <meta charset="UTF-8">
     <title>Update user</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
-<div class="container my-5">
-    <h2 class="mb-5">Update User</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <form action="#" th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post">
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="firstName" class="col-form-label">First name</label>
-                        <input type="text" th:field="*{firstName}" class="form-control" id="firstName" placeholder="firstName">
-                        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="lastName" class="col-form-label">Last name</label>
-                        <input type="text" th:field="*{lastName}" class="form-control" id="lastName" placeholder="lastName">
-                        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="username" class="col-form-label">Username</label>
-                        <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="username">
-                        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="password" class="col-form-label">Password</label>
-                        <input type="text" th:field="*{password}" class="form-control" id="password" placeholder="password">
-                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check col-md-6">
-                        <ul>
-                            <li th:each="role : ${roles}">
-                                <input type="checkbox" class="form-check-input" th:field="*{authorities}" th:value="${role}" />
-                                <label th:for="${#ids.prev('authorities')}" class="form-check-label" th:text="${role}"></label>
-                            </li>
-                        </ul>
-                    </div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="display-4" th:text="#{users.update.title}">Update User</h2>
+            <hr>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="#" th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label" for="firstName"
+                                       th:text="#{users.update.first_name.label}">First name</label>
+                                <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
+                                       th:placeholder="#{users.update.first_name.placeholder}">
+                                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label" for="lastName" th:text="#{users.update.last_name.label}">Last
+                                    name</label>
+                                <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
+                                       th:placeholder="#{users.update.last_name.placeholder}">
+                                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label" for="username" th:text="#{users.update.username.label}">Username</label>
+                                <input type="text" th:field="*{username}" class="form-control" id="username"
+                                       th:placeholder="#{users.update.username.placeholder}">
+                                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                      class="text-danger"></span>
+                                <span th:if="${usernameErrorMessage}" th:text="${usernameErrorMessage}"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label" for="password" th:text="#{users.update.password.label}">Password</label>
+                                <input type="text" name="password" class="form-control" id="password"
+                                       th:placeholder="#{users.update.password.placeholder}">
+                                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-check col-md-6">
+                                <ul>
+                                    <li th:each="authority : ${authorities}">
+                                        <input type="checkbox" class="form-check-input" th:field="*{authorities}"
+                                               th:value="${authority}"/>
+                                        <label th:for="${#ids.prev('authorities')}" class="form-check-label"
+                                               th:text="${authority}"></label>
+                                    </li>
+                                </ul>
+                                <span th:if="${#fields.hasErrors('authorities')}" th:errors="*{authorities}"
+                                      class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="btn btn-primary" th:value="#{users.update.button.submit}" type="submit">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mt-5">
-                        <input type="submit" class="btn btn-primary" value="Update User">
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

@@ -15,27 +15,37 @@
     <div class="collapse navbar-collapse" id="navbars">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/index" th:text="#{link.home}"></a>
+                <a class="nav-link" th:href="@{/index}" th:text="#{link.home}"></a>
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item active">
-                <a class="nav-link" href="/users" th:text="#{link.all_users}"></a>
+                <a class="nav-link" th:href="@{/profile}" th:text="#{link.profile}"></a>
+            </li>
+            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item active">
+                <a class="nav-link" th:href="@{/users}" th:text="#{link.all_users}"></a>
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-expanded="false" aria-haspopup="true" th:text="#{link.activities}">
                     Activities
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/activities">All activities</a>
-                    <a class="dropdown-item" href="/activities/add">Add activity</a>
-                    <a class="dropdown-item" href="/activities/request">All activity requests</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="/activities" th:text="#{link.all_activities}">All activities</a>
+                    <a class="dropdown-item" href="/activities/add" sec:authorize="hasAuthority('ADMIN')"
+                       th:text="#{link.add_activity}">
+                        Add activity
+                    </a>
+                    <a class="dropdown-item" href="/activities/request" sec:authorize="hasAuthority('ADMIN')"
+                       th:text="#{link.all_activity_requests}">
+                        All activity requests
+                    </a>
                 </div>
             </li>
         </ul>
         <div class="form-inline my-2 my-lg-0" sec:authorize="!isAuthenticated()">
             <form action="/registration" method="get">
-                <button type="submit" class="btn btn-outline-primary mr-3 my-2 my-sm-0" th:text="#{button.signup}">Sign up</button>
+                <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" th:text="#{button.signup}" type="submit">
+                    Sign up
+                </button>
             </form>
             <form action="/login" method="get">
                 <button type="submit" class="btn btn-primary my-2 my-sm-0" th:text="#{button.signin}"></button>
