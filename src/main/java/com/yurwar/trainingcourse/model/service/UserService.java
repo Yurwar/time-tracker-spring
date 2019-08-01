@@ -69,16 +69,16 @@ public class UserService implements UserDetailsService {
     }
 
     public void saveUser(RegistrationUserDTO userDTO) {
+        User user = User
+                .builder()
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .username(userDTO.getUsername())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .enabled(true)
+                .authorities(Collections.singleton(Authority.USER))
+                .build();
         try {
-            User user = User
-                    .builder()
-                    .firstName(userDTO.getFirstName())
-                    .lastName(userDTO.getLastName())
-                    .username(userDTO.getUsername())
-                    .password(passwordEncoder.encode(userDTO.getPassword()))
-                    .enabled(true)
-                    .authorities(Collections.singleton(Authority.USER))
-                    .build();
             userRepository.save(user);
             log.info("New user " + user);
         } catch (DataIntegrityViolationException e) {

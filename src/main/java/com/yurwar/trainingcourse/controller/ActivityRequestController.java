@@ -4,16 +4,21 @@ import com.yurwar.trainingcourse.model.entity.ActivityRequest;
 import com.yurwar.trainingcourse.model.entity.ActivityRequestStatus;
 import com.yurwar.trainingcourse.model.entity.User;
 import com.yurwar.trainingcourse.model.service.ActivityRequestService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
+@Log4j2
 public class ActivityRequestController {
     private final ActivityRequestService activityRequestService;
 
@@ -75,5 +80,12 @@ public class ActivityRequestController {
 
         activityRequestService.rejectActivityRequest(activityRequestId);
         return "redirect:/activities/request";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error(e.getMessage());
+        return "error/404";
     }
 }
