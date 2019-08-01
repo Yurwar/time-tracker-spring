@@ -5,65 +5,78 @@
 <head>
     <meta charset="UTF-8">
     <title>All users</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
 <div class="container">
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header display-4" th:text="#{users.header}">All registered users</div>
-            <div class="card-body">
-                <div th:if="${users.isEmpty()}">
-                    <p th:text="#{users.empty}"></p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="display-4" th:text="#{users.header}">All registered users</h1>
+                    <hr>
+                    <div th:if="${users.isEmpty()}">
+                        <h1 class="display-4" th:text="#{users.empty}"></h1>
+                        <hr>
+                    </div>
                 </div>
-                <table th:unless="${users.isEmpty()}"  class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th th:text="#{users.id}">Id</th>
-                        <th th:text="#{users.first_name}">First name</th>
-                        <th th:text="#{users.last_name}">Last name</th>
-                        <th th:text="#{users.username}">Email</th>
-                        <th th:text="#{users.active}">Active</th>
-                        <th th:text="#{users.roles}">Roles</th>
-                        <th th:text="#{users.edit}">Edit</th>
-                        <th th:text="#{users.delete}">Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="user : ${users}">
-                        <td><span th:text="${user.id}"></span ></td>
-                        <td><span th:text="${user.firstName}"></span ></td>
-                        <td><span th:text="${user.lastName}"></span ></td>
-                        <td><span th:text="${user.username}"></span ></td>
-                        <td><span th:text="${user.enabled}"></span ></td>
-                        <td><span th:text="${user.authorities}"></span ></td>
-                        <td>
-                            <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary">
-                                <img th:src="@{/images/outline-edit-24px.svg}">
-                            </a>
-                        </td>
-                        <td>
-                            <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-primary">
-                                <img th:src="@{/images/outline-delete-24px.svg}">
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="card-body">
+
+                    <table th:unless="${users.isEmpty()}" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th th:text="#{users.id}">Id</th>
+                            <th th:text="#{users.first_name}">First name</th>
+                            <th th:text="#{users.last_name}">Last name</th>
+                            <th th:text="#{users.username}">Email</th>
+                            <th th:text="#{users.active}">Active</th>
+                            <th th:text="#{users.roles}">Roles</th>
+                            <th th:text="#{users.edit}">Edit</th>
+                            <th th:text="#{users.delete}">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td><span th:text="${user.id}"></span></td>
+                            <td><span th:text="${user.firstName}"></span></td>
+                            <td><span th:text="${user.lastName}"></span></td>
+                            <td><span th:text="${user.username}"></span></td>
+                            <td><span th:text="${user.enabled}"></span></td>
+                            <td><span th:text="${user.authorities}"></span></td>
+                            <td>
+                                <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary">
+                                    <img th:src="@{/images/outline-edit-24px.svg}">
+                                </a>
+                            </td>
+                            <td>
+                                <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-primary">
+                                    <img th:src="@{/images/outline-delete-24px.svg}">
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer"
+                     th:include="~{/fragments/pagination.html::page-navigation(url='/users',page=${users})}"></div>
             </div>
-            <div class="card-footer" th:include="~{/fragments/pagination.html::page-navigation(url='/users',page=${users})}"></div>
         </div>
     </div>
-</div>
 </div>
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

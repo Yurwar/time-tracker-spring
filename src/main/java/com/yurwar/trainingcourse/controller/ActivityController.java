@@ -35,7 +35,7 @@ public class ActivityController {
     @GetMapping("/activities")
     public String getActivitiesPage(Model model,
                                     @PageableDefault(sort = {"id"},
-                                            direction =  Sort.Direction.DESC,
+                                            direction = Sort.Direction.DESC,
                                             size = 5) Pageable pageable) {
 
         model.addAttribute("activityPage", activityService.findAllActivitiesPageable(pageable));
@@ -85,7 +85,7 @@ public class ActivityController {
                                 @ModelAttribute("duration") @Valid ActivityDurationDTO durationDTO,
                                 BindingResult bindingResult,
                                 @PageableDefault(sort = {"id"},
-                                        direction =  Sort.Direction.DESC,
+                                        direction = Sort.Direction.DESC,
                                         size = 5) Pageable pageable,
                                 Model model) {
         log.info(durationDTO);
