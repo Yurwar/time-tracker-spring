@@ -49,7 +49,7 @@
                                 <select th:field="*{importance}" class="form-control" id="importanceLevel">
                                     <option th:each="importance : ${importanceLevels}"
                                             th:text="${importance}"
-                                            th:value="${importance}">
+                                            th:value="${importance.name()}">
                                     </option>
                                 </select>
                                 <span th:if="${#fields.hasErrors('importance')}" th:errors="*{importance}"

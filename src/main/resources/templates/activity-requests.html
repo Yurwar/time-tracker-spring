@@ -15,11 +15,14 @@
     <div class="card">
         <div class="card-header">
             <div th:if="${activityRequests.isEmpty()}">
-                <p class="display-4" th:text="#{activity.request.empty}">No activity requests available</p>
+                <h1 class="display-4" th:text="#{activity.request.empty}">No activity requests available</h1>
+                <hr>
             </div>
-            <h1 class="display-4" th:text="#{activity.request.title}">Activity requests</h1>
-            <hr>
-            <div th:replace="~{/fragments/pagination.html::page-navigation(url='/activities/request',page=${activityRequests})}"></div>
+            <div th:unless="${activityRequests.isEmpty()}">
+                <h1 class="display-4" th:text="#{activity.request.title}">Activity requests</h1>
+                <hr>
+                <div th:replace="~{/fragments/pagination.html::page-navigation(url='/activities/request',page=${activityRequests})}"></div>
+            </div>
         </div>
         <div class="card-body">
             <div th:unless="${activityRequests.isEmpty()}" class="row">
