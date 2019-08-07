@@ -2,7 +2,7 @@ package com.yurwar.trainingcourse.model.entity;
 
 public enum ActivityRequestAction {
     ADD("Add"),
-    REMOVE("Remove");
+    COMPLETE("Complete");
 
     private final String simpleName;
 

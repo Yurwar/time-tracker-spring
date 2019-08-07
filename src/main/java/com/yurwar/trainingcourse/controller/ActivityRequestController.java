@@ -61,7 +61,7 @@ public class ActivityRequestController {
             case ADD:
                 activityRequestService.approveAddActivityRequest(activityRequestId);
                 break;
-            case REMOVE:
+            case COMPLETE:
                 activityRequestService.approveCompleteActivityRequest(activityRequestId);
                 break;
         }

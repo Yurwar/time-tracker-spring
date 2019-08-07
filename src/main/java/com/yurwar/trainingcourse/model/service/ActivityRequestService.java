@@ -93,7 +93,7 @@ public class ActivityRequestService {
                 .findByActivityIdAndUserId(activityId, userId)
                 .stream()
                 .filter(activityRequest ->
-                        activityRequest.getAction().equals(ActivityRequestAction.REMOVE) &&
+                        activityRequest.getAction().equals(ActivityRequestAction.COMPLETE) &&
                                 activityRequest.getStatus().equals(ActivityRequestStatus.PENDING))
                 .count();
         if (currentActivityRequestsCount > 0) {
@@ -110,7 +110,7 @@ public class ActivityRequestService {
                     ActivityRequest activityRequest = ActivityRequest.builder()
                             .user(user)
                             .activity(activity)
-                            .action(ActivityRequestAction.REMOVE)
+                            .action(ActivityRequestAction.COMPLETE)
                             .status(ActivityRequestStatus.PENDING)
                             .requestDate(LocalDateTime.now())
                             .build();
