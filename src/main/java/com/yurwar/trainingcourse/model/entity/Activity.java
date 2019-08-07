@@ -48,7 +48,7 @@ public class Activity {
     @Convert(converter = DurationConverter.class)
     private Duration duration;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "activities")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "activities", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<User> users;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)

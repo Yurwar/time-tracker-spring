@@ -135,22 +135,18 @@ public class ActivityRequestService {
             case PENDING: {
                 activity.setStartTime(LocalDateTime.now());
                 activity.setStatus(ActivityStatus.ACTIVE);
-                activity.getUsers().add(user);
                 user.getActivities().add(activity);
                 activityRequest.setStatus(ActivityRequestStatus.APPROVED);
 
                 activityRepository.save(activity);
-                userRepository.save(user);
                 log.info("Activity request approved");
                 break;
             }
             case ACTIVE: {
-                activity.getUsers().add(user);
                 user.getActivities().add(activity);
                 activityRequest.setStatus(ActivityRequestStatus.APPROVED);
 
                 activityRepository.save(activity);
-                userRepository.save(user);
                 log.info("Activity request approved");
                 break;
             }
