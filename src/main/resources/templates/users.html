@@ -16,10 +16,12 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="display-4" th:text="#{users.header}">All registered users</h1>
-                    <hr>
                     <div th:if="${users.isEmpty()}">
                         <h1 class="display-4" th:text="#{users.empty}"></h1>
+                        <hr>
+                    </div>
+                    <div th:unless="${users.isEmpty()}">
+                        <h1 class="display-4" th:text="#{users.header}">All registered users</h1>
                         <hr>
                     </div>
                 </div>
