@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+/**
+ * Service with business logic for managing activity requests
+ *
+ * @author Yurii Matora
+ */
 @Log4j2
 @Service
 public class ActivityRequestService {
@@ -93,7 +98,7 @@ public class ActivityRequestService {
                 .findByActivityIdAndUserId(activityId, userId)
                 .stream()
                 .filter(activityRequest ->
-                        activityRequest.getAction().equals(ActivityRequestAction.REMOVE) &&
+                        activityRequest.getAction().equals(ActivityRequestAction.COMPLETE) &&
                                 activityRequest.getStatus().equals(ActivityRequestStatus.PENDING))
                 .count();
         if (currentActivityRequestsCount > 0) {
@@ -110,7 +115,7 @@ public class ActivityRequestService {
                     ActivityRequest activityRequest = ActivityRequest.builder()
                             .user(user)
                             .activity(activity)
-                            .action(ActivityRequestAction.REMOVE)
+                            .action(ActivityRequestAction.COMPLETE)
                             .status(ActivityRequestStatus.PENDING)
                             .requestDate(LocalDateTime.now())
                             .build();
@@ -135,22 +140,18 @@ public class ActivityRequestService {
             case PENDING: {
                 activity.setStartTime(LocalDateTime.now());
                 activity.setStatus(ActivityStatus.ACTIVE);
-                activity.getUsers().add(user);
                 user.getActivities().add(activity);
                 activityRequest.setStatus(ActivityRequestStatus.APPROVED);
 
                 activityRepository.save(activity);
-                userRepository.save(user);
                 log.info("Activity request approved");
                 break;
             }
             case ACTIVE: {
-                activity.getUsers().add(user);
                 user.getActivities().add(activity);
                 activityRequest.setStatus(ActivityRequestStatus.APPROVED);
 
                 activityRepository.save(activity);
-                userRepository.save(user);
                 log.info("Activity request approved");
                 break;
             }

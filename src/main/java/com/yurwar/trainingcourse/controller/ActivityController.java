@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * Controller that react on activity related requests
+ *
+ * @see com.yurwar.trainingcourse.model.entity.Activity
+ */
 @Log4j2
 @Controller
 public class ActivityController {

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * Controller that gives pages user registration related
+ */
 @Log4j2
 @Controller
 @RequestMapping("/registration")

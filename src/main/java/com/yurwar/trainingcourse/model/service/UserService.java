@@ -2,6 +2,7 @@ package com.yurwar.trainingcourse.model.service;
 
 import com.yurwar.trainingcourse.dto.RegistrationUserDTO;
 import com.yurwar.trainingcourse.dto.UpdateUserDTO;
+import com.yurwar.trainingcourse.model.entity.Activity;
 import com.yurwar.trainingcourse.model.entity.Authority;
 import com.yurwar.trainingcourse.model.entity.User;
 import com.yurwar.trainingcourse.model.repository.UserRepository;
@@ -19,8 +20,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
+/**
+ * Service with business logic for managing users
+ *
+ * @author Yurii Matora
+ */
 @Log4j2
 @Service
 public class UserService implements UserDetailsService {
@@ -79,7 +86,12 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(long id) {
-        userRepository.deleteById(id);
+        User user = getUserById(id);
+        List<Activity> userActivities = user.getActivities();
+        for (Activity activity : userActivities) {
+            activity.getUsers().remove(user);
+        }
+        userRepository.delete(user);
     }
 
     public void updateUser(long id, UpdateUserDTO userDTO) {

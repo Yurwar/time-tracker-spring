@@ -16,7 +16,7 @@ import java.util.Set;
 @Builder
 @EqualsAndHashCode(exclude = {"activities", "activityRequests"})
 @Entity
-@Table(name = "registered_users")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @SequenceGenerator(name = "userIdSeq", sequenceName = "users_id_seq", allocationSize = 0)
@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "activity_id")

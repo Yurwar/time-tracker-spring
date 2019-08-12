@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="col-form-label" for="password" th:text="#{users.update.password.label}">Password</label>
-                                <input type="text" name="password" class="form-control" id="password"
+                                <input class="form-control" id="password" name="password" type="password"
                                        th:placeholder="#{users.update.password.placeholder}">
                                 <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                                       class="text-danger"></span>

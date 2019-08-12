@@ -10,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Configure paths allowed for different users authorities and configure user authentication method
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -38,28 +41,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/js/**", "/images/**", "/css/**", "/index", "/", "/access-denied", "/favicon.ico", "/error/**")
-                    .permitAll()
-                    .antMatchers("/users/**", "/activities/request", "/activities/add", "/activities/delete/**", "/activities/edit/**", "/activities/request/approve/**", "/activities/request/reject/**")
-                    .hasAuthority("ADMIN")
-                    .antMatchers("/profile", "/activities","/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**")
-                    .hasAnyAuthority("ADMIN", "USER")
-                    .antMatchers("/registration", "/login")
-                    .anonymous()
-                    .anyRequest()
-                    .denyAll()
+                .antMatchers("/js/**", "/images/**", "/css/**", "/index", "/", "/access-denied", "/favicon.ico", "/error/**")
+                .permitAll()
+                .antMatchers("/users/**", "/activities/request", "/activities/add", "/activities/delete/**", "/activities/edit/**", "/activities/request/approve/**", "/activities/request/reject/**")
+                .hasAuthority("ADMIN")
+                .antMatchers("/profile", "/activities", "/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**")
+                .hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/registration", "/login")
+                .anonymous()
+                .anyRequest()
+                .denyAll()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .failureUrl("/login?error")
-                    .usernameParameter("username")
-                    .defaultSuccessUrl("/profile")
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error")
+                .usernameParameter("username")
+                .defaultSuccessUrl("/profile")
                 .and()
-                    .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login?logout")
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout")
                 .and()
-                    .exceptionHandling()
-                    .accessDeniedHandler(accessDeniedHandler);
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler);
     }
 }

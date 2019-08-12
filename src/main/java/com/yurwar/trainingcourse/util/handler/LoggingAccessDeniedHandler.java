@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Handler class for access denied event
+ */
 @Component
 @Log4j2
 public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
