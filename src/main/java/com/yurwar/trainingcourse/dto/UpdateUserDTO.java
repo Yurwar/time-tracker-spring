@@ -7,6 +7,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+/**
+ * Data transfer object to transport user data from update method in controller to service
+ *
+ * @author Yurii Matora
+ * @see com.yurwar.trainingcourse.model.entity.User
+ */
 @Data
 public class UpdateUserDTO {
     private long id;

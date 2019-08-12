@@ -23,6 +23,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Service with business logic for managing users
+ *
+ * @author Yurii Matora
+ */
 @Log4j2
 @Service
 public class UserService implements UserDetailsService {

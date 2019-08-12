@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Controller that react on activity requests related requests
+ *
+ * @see com.yurwar.trainingcourse.model.entity.Activity
+ */
 @Controller
 @Log4j2
 public class ActivityRequestController {

@@ -17,6 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.util.Set;
 
+/**
+ * Service with business logic for managing activities
+ *
+ * @author Yurii Matora
+ */
 @Service
 @Log4j2
 public class ActivityService {

@@ -1,5 +1,10 @@
 package com.yurwar.trainingcourse.model.entity;
 
+/**
+ * Importance levels for activity entity
+ *
+ * @see Activity
+ */
 public enum ActivityImportance {
     LOW("Low"),
     MEDIUM("Medium"),

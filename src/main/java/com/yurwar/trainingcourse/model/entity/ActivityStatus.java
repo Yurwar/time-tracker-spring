@@ -1,5 +1,10 @@
 package com.yurwar.trainingcourse.model.entity;
 
+/**
+ * Statuses for activity
+ *
+ * @see Activity
+ */
 public enum ActivityStatus {
     PENDING("Pending"),
     ACTIVE("Active"),

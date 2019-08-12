@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+/**
+ * Service with business logic for managing activity requests
+ *
+ * @author Yurii Matora
+ */
 @Log4j2
 @Service
 public class ActivityRequestService {

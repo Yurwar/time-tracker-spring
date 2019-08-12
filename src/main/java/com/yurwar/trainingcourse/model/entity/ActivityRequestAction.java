@@ -1,5 +1,10 @@
 package com.yurwar.trainingcourse.model.entity;
 
+/**
+ * Actions for activity request
+ *
+ * @see ActivityRequest
+ */
 public enum ActivityRequestAction {
     ADD("Add"),
     COMPLETE("Complete");

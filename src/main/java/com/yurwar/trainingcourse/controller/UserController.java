@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * Controller that react on user related requests
+ *
+ * @see com.yurwar.trainingcourse.model.entity.Activity
+ */
 @Controller
 @Log4j2
 @RequestMapping
